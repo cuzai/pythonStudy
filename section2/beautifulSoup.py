@@ -45,5 +45,3 @@ p2 = p1.next_sibling.next_sibling   #next_sibling : 태그간 이동 시 활용.
 print("p2 : ", p2)
 p3 = p1.previous_sibling.previous_sibling
 print("p3", p3)
-
-print("ddd")
