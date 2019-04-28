@@ -48,5 +48,3 @@ with open(bfilename, 'rb') as f :
 with open(tfilename, 'rt') as f :
     for i, line in enumerate(f, 1) :
         print(type(line), 'text read', str(i) + " " +line, end = "")
-
-#sdfdsfdsfasdfdf
