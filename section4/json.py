@@ -26,7 +26,7 @@ data['people'].append({
 
 # dict(json) → str
 e = json.dumps(data, indent = 4)    # json(딕셔너리) 오브젝트를 텍스트 파일로 변환, indent = json파일 정렬 시 들여쓰기 depth
-# print(type(e))
+# print(type(e))        # dumps(dump string) : 텍스트로 직렬화, dump : 열린 파일과 유사한 객체로 직렬화
 # print(e)
 
 # str → dict(json)
@@ -49,5 +49,3 @@ with open('member.json', 'r') as infile :
         print(i['website'])
         print(i['from'])
         print()
-
-        dfdsfds
