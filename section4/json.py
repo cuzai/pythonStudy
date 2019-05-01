@@ -24,6 +24,28 @@ data['people'].append({
 
 # print(data)
 
-e = json.dumps(data)
-print(type(e))
-print(e)
+# dict(json) → str
+e = json.dumps(data, indent = 4)    # json(딕셔너리) 오브젝트를 텍스트 파일로 변환, indent = json파일 정렬 시 들여쓰기 depth
+# print(type(e))
+# print(e)
+
+# str → dict(json)
+d = json.loads(e)   # str 오브젝트를 원래 자료형으로 변환
+# print(type(d))
+# print(d)
+
+with open('member.json', 'w') as outfile:
+    outfile.write(e)
+
+# jsoneditoronline.org 에서 json 파일을 보기 좋게 바꿔준다.
+
+with open('member.json', 'r') as infile :
+    r = json.loads(infile.read())
+    # print(type(r))
+    # print(r)
+
+    for i in r['people'] :
+        print(i['name'])
+        print(i['website'])
+        print(i['from'])
+        print()
