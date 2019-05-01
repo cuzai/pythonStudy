@@ -2,3 +2,6 @@
 section4/forecast.txt
 section4/forecast.xml
 section4/member.json
+section4/csv_s1.csv
+section4/csv_s2.csv
+section4/__pycache__/
