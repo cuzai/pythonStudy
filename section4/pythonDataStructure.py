@@ -95,28 +95,57 @@ e = [0, 1, ['car', 'apple', 'apartment']]    # 중첩 리스트
 
 # 딕셔너리(key, value → 순서x, 중복x, 수정o, 삭제o)
 # 선언
-a = {'name' : 'park', 'phone' : '010-000-0000', 'birth' : '881214'}
-b = {0 : 'hello'}
-c = {'arr' : [0, 1, 2, 3]}
-print(type(a), a)
+# a = {'name' : 'park', 'phone' : '010-000-0000', 'birth' : '881214'}
+# b = {0 : 'hello'}
+# c = {'arr' : [0, 1, 2, 3]}
+# print(type(a), a)
+#
+# print(a['name'])    # 없는 키값이면 예외가 발생
+# print(a.get('name'))    # 없는 키값이면 none을 돌려줌
+# print(c.get('arr'))
+#
+# # 딕셔너리 추가
+# a['address'] = '서울'
+# print(a)
+#
+# a['rank'] = [1, 2, 3]
+# print(a)
+#
+# print(type(a.keys()))   # 명시적으로 list로 형변환 가능
+#
+# print(a.values())   # 명시적으로 list로 형변환 가능
+#
+# print(a.items())    # 튜플형으로 돌려줌
+#
+# print('name' in a)  # 키값이 있는지 iterate 가능
+# print('city' in a)
 
-print(a['name'])    # 없는 키값이면 예외가 발생
-print(a.get('name'))    # 없는 키값이면 none을 돌려줌
-print(c.get('arr'))
 
-# 딕셔너리 추가
-a['address'] = '서울'
-print(a)
+# sets 집합 자료형(순서x, 중복x, 수정o, 삭제o)
+# 선언
+a = set([1, 2, 3, 4])
+print(a)    # 인덱싱을 제공 x
 
-a['rank'] = [1, 2, 3]
-print(a)
+t = tuple(a)
+print(t[0:2])
 
-print(type(a.keys()))   # 명시적으로 list로 형변환 가능
+l = list(a)
+print(l[0:2])
 
-print(a.values())   # 명시적으로 list로 형변환 가능
+s1 = set([1, 2, 3, 4, 5, 6])
+s2 = set([4, 5, 6, 7, 8, 9])
 
-print(a.items())    # 튜플형으로 돌려줌
+print(s1 & s2)  # 교집합을 찾아줌
+print(s1.intersection(s2))
 
-print('name' in a)  # 키값이 있는지 iterate 가능
-print('city' in a)
+print(s1 | s2)  # 합집합을 돌려줌
 
+print(s1.difference(s2))    # 차집합을 돌려줌
+
+# 추가 제거
+s3 = set([1, 2, 3])
+s3.add(4)
+print(s3)
+
+s3.remove(2)
+print(s3)
