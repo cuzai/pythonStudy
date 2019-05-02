@@ -5,7 +5,7 @@ def collatz(number) :
         return int(number * 3 + 1)
 
 while True :
-    number = input("Input a number")
+    number = input("Input number")
     try :
         number = int(number)
     except ValueError :
