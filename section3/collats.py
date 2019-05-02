@@ -9,6 +9,8 @@ while True :
     try :
         number = int(number)
     except ValueError :
+        if number == 'exit' :
+            exit()
         print("'{}'{}".format(number, "is not a number"))
         continue
     break
