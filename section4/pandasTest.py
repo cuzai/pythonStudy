@@ -59,5 +59,3 @@ df2 = pandas.read_csv('csv_s2.csv', sep = ';', skiprows = [0], header = None, na
 # 합계 컬럼 추가
 df2['Sum'] = df2[['Test1', 'Test2', 'Test3', 'Final']].sum(axis = 1)
 print(df2)
-
-
