@@ -39,10 +39,10 @@ with open('data/todos.json', 'r') as infile :
 # print(db.tables())
 
 # 전체 데이터 삭제(개별 테이블별로)
-users.purge()   # db.purge_table('users')와 똑같다.
-todos.purge()
+# users.purge()   # db.purge_table('users')와 똑같다.
+# todos.purge()
 
-db.purge_tables()   # 테이블 상관없이 테이븖까지 전체 다 지워버림
+# db.purge_tables()   # 테이블 상관없이 테이븖까지 전체 다 지워버림
 
 
 db.close()
