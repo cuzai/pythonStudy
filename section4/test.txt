@@ -1,5 +1,0 @@
-77
-Hello World
-car
-apple
-house
