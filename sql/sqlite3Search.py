@@ -29,6 +29,32 @@ c.execute("SELECT * FROM users")
 
 
 # 조건 조회1
-param1 = (1,)
-c.execute("SELECT * FROM users WHERE id=?", param1)
-print(c.fetchall())
+# param1 = (1,)
+# c.execute("SELECT * FROM users WHERE id=?", param1)
+# print(c.fetchall())
+
+# 조건 조회2
+# param2 = 1
+# c.execute("SELECT * FROM users WHERE id = '%s'" % param2)   # %s, %d, %f 같은 파이썬 내부 매핑이랑 상관 없음 SQL에서는 문자든 숫자든 그냥 무조건 %s
+# print(c.fetchall())
+
+# 조건 조회3
+# c.execute("SELECT * FROM users WHERE id = :id", {'id' : 1})
+# print(c.fetchall())
+
+# 조건 조회4
+# param4 = (1, 4)
+# c.execute("SELECT * FROM users WHERE id IN(?, ?)", param4)
+# print(c.fetchall())
+
+# 조건 조회5
+# c.execute("SELECT * FROM users WHERE id = :id1 OR id = :id2", {'id1' : 1, 'id2' : 4})
+# print(c.fetchall())
+
+# dump
+with conn :
+    # dump 출력
+    with open('data/test.dump', 'w') as f :
+        for line in conn.iterdump() :
+            f.write('%s\n' % line)
+        print("Dump write complete")
