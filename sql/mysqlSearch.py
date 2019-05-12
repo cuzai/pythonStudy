@@ -17,10 +17,10 @@ try :
         # for row in c.fetchall() :
         #     print(row)
 
-        # # 조건 조회 1
-        # param1 = (1,)
-        # c.execute("SELECT * FROM users WHERE id = %s", param1)
-        # print(c.fetchall())
+        # 조건 조회 1
+        param1 = (1,)
+        c.execute("SELECT * FROM users WHERE id = %s", param1)
+        print(c.fetchall())
 
         # # 조건 조회 2
         # param2 = 1
