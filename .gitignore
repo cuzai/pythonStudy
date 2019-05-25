@@ -13,4 +13,5 @@ SQL/data/
 SQL/databases/
 DB Browser for SQLite/
 SQL/sqlite1.db
-/QT/resource
+QT/resource/
+*/__pycache__/
