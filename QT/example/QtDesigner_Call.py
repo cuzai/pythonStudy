@@ -1,13 +1,14 @@
 from PyQt5 import QtWidgets, QtCore
 import sys
 from PyQt5 import uic
+from QTui import Ui_MainWindow
 
 uiPath = 'C:/Users/cuzai/Desktop/Web_Crawling/pythonStudy/QT/example/PyQTBasic3.ui'
 
-form_class = uic.loadUiType(uiPath)[0]
+# form_class = uic.loadUiType(uiPath)[0]
 
 
-class TestForm(QtWidgets.QMainWindow, form_class) :
+class TestForm(QtWidgets.QMainWindow, Ui_MainWindow) : #TestForm(QtWidgets.QMainWindow, form_class)
     def __init__(self):
         super().__init__()
         self.setupUi(self)
