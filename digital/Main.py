@@ -75,8 +75,11 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
             # Nielsen
             self.nielsen_Press = Nielsen_Press(5)
+            self.nielsen_Press.noti
             self.nielsen_Press.finished.connect(self.set_N_Press_Title)
             self.nielsen_Press.start()
+
+
 
         except Exception as e :
             logging.info("__init__ : {}".format(e))

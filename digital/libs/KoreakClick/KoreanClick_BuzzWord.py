@@ -4,7 +4,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 
 class KoreanClick_BuzzWord(QThread) :
     finished = pyqtSignal(str, str)
-    def __init__(self, howMany):
+    def __init__(self,howMany):
         super().__init__()
         self.url = 'http://www.koreanclick.com/insights/newsletter.html?code=buzzword'
         self.howMany = howMany
