@@ -32,7 +32,7 @@ c.execute("CREATE TABLE IF NOT EXISTS users(id integer PRIMARY KEY, username tex
 
 
 # 데이터 삽입
-# c.execute('INSERT INTO users VALUES(1, "kim", "010-000-0000", "kim.co.kr", ?)', (nowDateTime,)) # 매핑은 튜플로 한다.
+c.execute('INSERT INTO users VALUES(1, "kim", "010-000-0000", "kim.co.kr", ?)', (nowDateTime,)) # 매핑은 튜플로 한다.
 
 userList = (
     (2, "kim", "010-000-0000", "kim.co.kr", nowDateTime),
