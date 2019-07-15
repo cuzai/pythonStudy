@@ -13,8 +13,8 @@ class KoreanClick(QThread) :
     def run(self):
         self.KoreanClick_Internet()
         self.KoreanClick_Topic()
-        self.KoreanClick_BuzzWorld()
         self.KoreanClick_DigitalNow()
+        self.KoreanClick_BuzzWord()
 
     def KoreanClick_Internet(self):
         self.url = 'http://www.koreanclick.com/insights/newsletter.html?copde=trend'
@@ -24,7 +24,7 @@ class KoreanClick(QThread) :
         self.url = 'http://www.koreanclick.com/insights/newsletter.html?code=topic'
         self.parse()
 
-    def KoreanClick_BuzzWorld(self):
+    def KoreanClick_BuzzWord(self):
         self.url = 'http://www.koreanclick.com/insights/newsletter.html?code=buzzword'
         self.parse()
 

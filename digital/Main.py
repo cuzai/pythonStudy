@@ -7,15 +7,12 @@ from PyQt5.QtCore import pyqtSlot
 
 from libs.KoreakClick.KoreanClick import KoreanClick
 from libs.KoreakClick.KcClicked import KcClicked
-
 from libs.Nielsen.Nielsen_Press import Nielsen_Press
 from libs.Nielsen.NClicked import NClicked
-
-from libs.Rankey.RankeyTitle import RankeyTitle
-from libs.Rankey.RankeyImg import RankeyImg
-
 from libs.DailyTrends.DailyTrends import DailyTrends
 from libs.DailyTrends.DtClicked import DtClicked
+from libs.Rankey.RankeyTitle import RankeyTitle
+from libs.Rankey.RankeyImg import RankeyImg
 
 from ui.myUi import Ui_MainWindow
 import sys
@@ -23,12 +20,8 @@ import logging
 
 form_class = uic.loadUiType('./ui/main.ui')[0]
 class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
-    dt_idx = 0
-
     kc_idx = 0
-    kcTopic_idx = 0
-    kcDN_idx = 0
-    kcBW_idx = 0
+    dt_idx = 0
     n_Press_idx = 0
 
     def __init__(self):
@@ -37,14 +30,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
             # initialize ui
             self.setupUi(self)
+            # ranky rank img set
             # self.rk1st.setPixmap(QtGui.QPixmap("./res/rankey/rank1.png"))
             # self.rk2nd.setPixmap(QtGui.QPixmap("./res/rankey/rank2.png"))
             # self.rk3rd.setPixmap(QtGui.QPixmap("./res/rankey/rank3.png"))
-
-            # Daily Trends
-            self.dailyTrend = DailyTrends(5)
-            self.dailyTrend.finished.connect(self.dtSetTitle)
-            self.dailyTrend.start()
 
             # # rankey
             # self.rkt = RankeyTitle()
@@ -54,6 +43,11 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             # self.rki = RankeyImg()
             # self.rki.finished.connect(self.rkSetImg)
             # self.rki.start()
+
+            # Daily Trends
+            self.dailyTrend = DailyTrends(5)
+            self.dailyTrend.finished.connect(self.dtSetTitle)
+            self.dailyTrend.start()
 
             # Korean Click
             self.koreanClick = KoreanClick(5)

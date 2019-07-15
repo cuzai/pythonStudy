@@ -58,7 +58,7 @@ border: none;
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-1924</y>
+         <y>-1954</y>
          <width>1455</width>
          <height>2797</height>
         </rect>
@@ -272,7 +272,7 @@ QGroupBox::title {
                  <string notr="true">background : transparent</string>
                 </property>
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="tab_14">
                  <attribute name="title">
