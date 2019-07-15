@@ -69,7 +69,7 @@ class KoreanClick(QThread) :
             for n, i in enumerate(temp) :
                 title = temp[n+1].select_one('.tb_txt')
                 href = title.select_one('a')['href']
-                date = temp[n+1].select_one('.tb_txt_center').text
+                date = temp[n+1].select('.tb_txt_center')[1].text
                 self.finished.emit(title.text, href, date)
                 logging.info("KoreanClick_Internet Emit")
                 if n == self.howMany-1 :
