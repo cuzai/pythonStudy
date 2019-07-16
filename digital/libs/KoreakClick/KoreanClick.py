@@ -64,7 +64,7 @@ class KoreanClick(QThread) :
                     url = requests.get(self.url).content
                     break
                 except Exception as e:
-                    logging.info("parse_digital request error : {}".format(e))
+                    logging.info(">>>>> parse_digital request error : {}".format(e))
                     continue
             soup = BeautifulSoup(url, 'html.parser')
             temp = soup.select('table')[2].select('tr')
@@ -77,7 +77,6 @@ class KoreanClick(QThread) :
                 logging.info("KoreanClick_Internet Emit")
                 if n == self.howMany-1 :
                     break
-
 
         except Exception as e :
             logging.info((">>>>> def parse_digital() error : {}".format(e)))

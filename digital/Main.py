@@ -7,6 +7,10 @@ from PyQt5.QtCore import pyqtSlot
 
 from libs.KoreakClick.KoreanClick import KoreanClick
 from libs.KoreakClick.KcClicked import KcClicked
+from libs.KoreakClick.KoreanClick_BuzzWord import KoreanClick_BuzzWord
+from libs.KoreakClick.KoreanClick_DigitalNow import KoreanClick_DigitalNow
+from libs.KoreakClick.KoreanClick_Internet import KoreanClick_Internet
+from libs.KoreakClick.KoreanClick_Topic import KoreanClick_Topic
 from libs.Nielsen.Nielsen_Press import Nielsen_Press
 from libs.Nielsen.NClicked import NClicked
 from libs.DailyTrends.DailyTrends import DailyTrends
@@ -20,7 +24,12 @@ import logging
 
 form_class = uic.loadUiType('./ui/main.ui')[0]
 class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
-    kc_idx = 0
+    howMany = 5
+    kc_internet_idx = 0
+    kc_topic_idx = 0
+    kc_digital_idx = 0
+    kc_buzz_idx = 0
+
     dt_idx = 0
     n_Press_idx = 0
 
@@ -50,9 +59,26 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.dailyTrend.start()
 
             # Korean Click
-            self.koreanClick = KoreanClick(5)
-            self.koreanClick.finished.connect(self.set_Kc_Title)
-            self.koreanClick.start()
+            self.kc_Internet = KoreanClick_Internet(self.howMany)
+            self.kc_Internet.finished.connect(self.set_Kc_Internet_Title)
+            self.kc_Internet.error.connect(self.kcError)
+            self.kc_Internet.start()
+
+            self.kc_Topic = KoreanClick_Topic(self.howMany)
+            self.kc_Topic.finished.connect(self.set_Kc_Topic_Title)
+            self.kc_Topic.error.connect(self.kcError)
+            self.kc_Topic.start()
+
+            self.kc_Digital = KoreanClick_DigitalNow(self.howMany)
+            self.kc_Digital.finished.connect(self.set_Kc_Digital_Title)
+            self.kc_Digital.error.connect(self.kcError)
+            self.kc_Digital.start()
+
+            self.kc_Buzz = KoreanClick_BuzzWord(self.howMany)
+            self.kc_Buzz.finished.connect(self.set_Kc_Buzz_Title)
+            self.kc_Buzz.error.connect(self.kcError)
+            self.kc_Buzz.start()
+
 
             # Nielsen
             self.nielsen_Press = Nielsen_Press(5)
@@ -65,7 +91,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.nowDateTime = now.strftime('%Y-%m-%d %H:%M:%S')
             self.c = self.conn.cursor()
             self.c.execute("CREATE TABLE IF NOT EXISTS dailyTrends(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Internet(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Topic(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Digital(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Buzz(title text, regdate text)")
             self.c.execute("CREATE TABLE IF NOT EXISTS nielsen(title text, regdate text)")
 
         except Exception as e :
@@ -131,53 +160,132 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
     # korean click
     @pyqtSlot(str, str, str)
-    def set_Kc_Title(self, title, href, date):
+    def set_Kc_Internet_Title(self, title, href, date):
         logging.info("set_Kc_Title")
         try :
-            self.kc_Li = [
-                self.kc_Internet_Title1, self.kc_Internet_Title2, self.kc_Internet_Title3, self.kc_Internet_Title4, self.kc_Internet_Title5,
-                self.kc_Topic_Title1, self.kc_Topic_Title2, self.kc_Topic_Title3, self.kc_Topic_Title4,self.kc_Topic_Title5,
-                self.kc_BW_title1, self.kc_BW_title2, self.kc_BW_title3, self.kc_BW_title4, self.kc_BW_title5,
-                self.kc_DN_title1, self.kc_DN_title2, self.kc_DN_title3, self.kc_DN_title4, self.kc_DN_title5
-            ]
-            self.kc_Date_Li = [
-                self.kc_Internet_Date1, self.kc_Internet_Date2, self.kc_Internet_Date3, self.kc_Internet_Date4, self.kc_Internet_Date5,
-                self.kc_Topic_Date1, self.kc_Topic_Date2, self.kc_Topic_Date3, self.kc_Topic_Date4, self.kc_Topic_Date5,
-                self.kc_BuzzWord_Date1, self.kc_BuzzWord_Date2, self.kc_BuzzWord_Date3, self.kc_BuzzWord_Date4, self.kc_BuzzWord_Date5,
-                self.kc_Digital_Date1, self.kc_Digital_Date2, self.kc_Digital_Date3, self.kc_Digital_Date4, self.kc_Digital_Date5
-               ]
+            self.kc_Internet_Li = [self.kc_Internet_Title1, self.kc_Internet_Title2, self.kc_Internet_Title3, self.kc_Internet_Title4, self.kc_Internet_Title5]
+            self.kc_Internet_Date_Li = [self.kc_Internet_Date1, self.kc_Internet_Date2, self.kc_Internet_Date3, self.kc_Internet_Date4, self.kc_Internet_Date5]
 
-            self.kc_Li[self.kc_idx].setText(title)
-            self.kc_Date_Li[self.kc_idx].setText(date)
+            self.kc_Internet_Li[self.kc_internet_idx].setText(title)
+            self.kc_Internet_Date_Li[self.kc_internet_idx].setText(date)
 
             # if in db, make the title grey
-            if self.c.execute("SELECT title FROM koreanClick WHERE title = ?", (title,)).fetchone() :
-                self.kc_Li[self.kc_idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
-                self.kc_Date_Li[self.kc_idx].setStyleSheet('color:grey')
+            if self.c.execute("SELECT title FROM koreanClick_Internet WHERE title = ?", (title,)).fetchone() :
+                self.kc_Internet_Li[self.kc_internet_idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                self.kc_Internet_Date_Li[self.kc_internet_idx].setStyleSheet('color:grey')
 
-            self.kc_Li[self.kc_idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-            idx = self.kc_idx
-            self.kc_Li[self.kc_idx].clicked.connect(lambda: self.kcClicked(href, title, idx))
-            self.kc_idx += 1
+            self.kc_Internet_Li[self.kc_internet_idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+            idx = self.kc_internet_idx
+            self.kc_Internet_Li[self.kc_internet_idx].clicked.connect(lambda: self.kcClicked(href, title, idx, "koreanClick_Internet"))
+            self.kc_internet_idx += 1
         except Exception as e :
-            logging.info(">>>>> def kcSet_Title {}".format(e))
+            logging.info(">>>>> def Set_kcInternet_Title error :  {}".format(e))
             pass
 
-    def kcClicked(self, href, title, idx):
+    def set_Kc_Topic_Title(self, title, href, date):
+        logging.info("set_Kc_Topic_Title")
+        try :
+            self.kc_Topic_Li = [self.kc_Topic_Title1, self.kc_Topic_Title2, self.kc_Topic_Title3, self.kc_Topic_Title4,self.kc_Topic_Title5]
+            self.kc_Topic_Date_Li = [self.kc_Topic_Date1, self.kc_Topic_Date2, self.kc_Topic_Date3, self.kc_Topic_Date4, self.kc_Topic_Date5]
+
+            self.kc_Topic_Li[self.kc_topic_idx].setText(title)
+            self.kc_Topic_Date_Li[self.kc_topic_idx].setText(date)
+
+            # if in db, make the title grey
+            if self.c.execute("SELECT title FROM koreanClick_Topic WHERE title = ?", (title,)).fetchone() :
+                self.kc_Topic_Li[self.kc_topic_idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                self.kc_Topic_Date_Li[self.kc_topic_idx].setStyleSheet('color:grey')
+
+            self.kc_Topic_Li[self.kc_topic_idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+            idx = self.kc_topic_idx
+            self.kc_Topic_Li[self.kc_topic_idx].clicked.connect(lambda: self.kcClicked(href, title, idx, "koreanClick_Topic"))
+            self.kc_topic_idx += 1
+        except Exception as e :
+            logging.info(">>>>> def Set_kc_topic_Title error :  {}".format(e))
+            pass
+
+    def set_Kc_Digital_Title(self, title, href, date):
+        logging.info("set_Kc_Digital_Title")
+        try :
+            self.kc_Digital_Li = [self.kc_DN_title1, self.kc_DN_title2, self.kc_DN_title3, self.kc_DN_title4, self.kc_DN_title5]
+            self.kc_Digital_Date_Li = [self.kc_Digital_Date1, self.kc_Digital_Date2, self.kc_Digital_Date3, self.kc_Digital_Date4, self.kc_Digital_Date5]
+
+            self.kc_Digital_Li[self.kc_digital_idx].setText(title)
+            self.kc_Digital_Date_Li[self.kc_digital_idx].setText(date)
+
+            # if in db, make the title grey
+            if self.c.execute("SELECT title FROM koreanClick_Digital WHERE title = ?", (title,)).fetchone() :
+                self.kc_Digital_Li[self.kc_digital_idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                self.kc_Digital_Date_Li[self.kc_digital_idx].setStyleSheet('color:grey')
+
+            self.kc_Digital_Li[self.kc_digital_idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+            idx = self.kc_digital_idx
+            self.kc_Digital_Li[self.kc_digital_idx].clicked.connect(lambda: self.kcClicked(href, title, idx, "koreanClick_Digital"))
+            self.kc_digital_idx += 1
+        except Exception as e :
+            logging.info(">>>>> def Set_kcDigital_Title error :  {}".format(e))
+            pass
+
+    def set_Kc_Buzz_Title(self, title, href, date):
+        logging.info("set_Kc_Buzz_Title")
+        try :
+            self.kc_Buzz_Li = [self.kc_BW_title1, self.kc_BW_title2, self.kc_BW_title3, self.kc_BW_title4, self.kc_BW_title5]
+            self.kc_Buzz_Date_Li = [self.kc_BuzzWord_Date1, self.kc_BuzzWord_Date2, self.kc_BuzzWord_Date3, self.kc_BuzzWord_Date4, self.kc_BuzzWord_Date5]
+
+            self.kc_Buzz_Li[self.kc_buzz_idx].setText(title)
+            self.kc_Buzz_Date_Li[self.kc_buzz_idx].setText(date)
+
+            # if in db, make the title grey
+            if self.c.execute("SELECT title FROM koreanClick_Buzz WHERE title = ?", (title,)).fetchone() :
+                self.kc_Buzz_Li[self.kc_buzz_idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                self.kc_Buzz_Date_Li[self.kc_buzz_idx].setStyleSheet('color:grey')
+
+            self.kc_Buzz_Li[self.kc_buzz_idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+            idx = self.kc_buzz_idx
+            self.kc_Buzz_Li[self.kc_buzz_idx].clicked.connect(lambda: self.kcClicked(href, title, idx, "koreanClick_Buzz"))
+            self.kc_buzz_idx += 1
+
+        except Exception as e :
+            logging.info(">>>>> def Set_kcBuzz_Title error :  {}".format(e))
+            pass
+
+    def kcClicked(self, href, title, idx, name):
         self.kced = KcClicked(href)
         self.kced.start()
 
         try :
             # insert into the db only when there is no same thing
-            if self.c.execute("SELECT title FROM koreanClick WHERE title = ?", (title,)).fetchone() is None:
-                self.c.execute("INSERT INTO koreanClick VALUES(?, ?)", (title, self.nowDateTime,))
+            if self.c.execute("SELECT title FROM "+ name +" WHERE title = ?", (title,)).fetchone() is None:
+                self.c.execute("INSERT INTO " + name + " VALUES(?, ?)", (title, self.nowDateTime,))
                 self.conn.commit()
-                self.kc_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
-                self.kc_Date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+
+                if name == 'koreanClick_Internet' :
+                    self.kc_Internet_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                    self.kc_Internet_Date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                elif name == 'koreanClick_Topic' :
+                    self.kc_Topic_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                    self.kc_Topic_Date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                elif name == 'koreanClick_Digital' :
+                    self.kc_Digital_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                    self.kc_Digital_Date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                elif name == 'koreanClick_Buzz' :
+                    self.kc_Buzz_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                    self.kc_Buzz_Date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+
         except Exception as e:
             logging.info(">>>>> def kcClicked error : {}".format(e))
             pass
 
+    @pyqtSlot(str)
+    def kcError(self, name):
+        if name == "koreanClick_Internet" :
+            self.kc_Internet_Title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.")
+        elif name == "koreanClick_Topic" :
+            self.kc_Topic_Title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.")
+        elif name == "koreanClick_Digital" :
+            self.kc_DN_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.")
+        elif name == 'koreanClick_Buzz' :
+            self.kc_BW_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.")
 
     # nielsen
     @pyqtSlot(str, str, str)
