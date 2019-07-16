@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['Main.py'],
-             pathex=['C:\\Users\\cuzai\\Anaconda3\\envs\\digital_32\\Lib\\site-packages\\PyQt5\\Qt\\bin'],
+             pathex=['C:\\Users\\cuzai\\Desktop\\park\\Web_Crawling\\pythonStudy\\digital'],
              binaries=[],
              datas=[],
              hiddenimports=[],

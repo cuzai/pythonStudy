@@ -39,9 +39,8 @@ class KoreanClick(QThread) :
                     url = requests.get(self.url).content
                     break
                 except Exception as e :
-                    logging.info("KCI request error : ".format(e))
+                    logging.info("KCI request error : {}".format(e))
                     continue
-
 
             soup = BeautifulSoup(url, 'html.parser')
             temp = soup.select('table')[2].select('tr')
@@ -56,6 +55,7 @@ class KoreanClick(QThread) :
                     break
         except Exception as e:
             logging.info(">>>>> KoreanClick.py error: {}".format(e))
+            pass
 
     def parse_digital(self):
         try :
@@ -63,7 +63,8 @@ class KoreanClick(QThread) :
                 try :
                     url = requests.get(self.url).content
                     break
-                except Exception :
+                except Exception as e:
+                    logging.info("parse_digital request error : {}".format(e))
                     continue
             soup = BeautifulSoup(url, 'html.parser')
             temp = soup.select('table')[2].select('tr')
@@ -80,6 +81,7 @@ class KoreanClick(QThread) :
 
         except Exception as e :
             logging.info((">>>>> def parse_digital() error : {}".format(e)))
+            pass
 
 
 if __name__ == "__main__" :

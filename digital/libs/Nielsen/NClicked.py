@@ -1,3 +1,5 @@
+import logging
+
 from PyQt5.QtCore import QThread
 from selenium import webdriver
 
@@ -7,5 +9,9 @@ class NClicked(QThread) :
         self.url = link
 
     def run(self):
-        driver = webdriver.Chrome('./webdriver/chrome/chromedriver')
-        driver.get(self.url)
+        try :
+            driver = webdriver.Chrome('./webdriver/chrome/chromedriver')
+            driver.get(self.url)
+        except Exception as e :
+            logging.info(">>>>> NClicked.py error : {}".format(e))
+            pass

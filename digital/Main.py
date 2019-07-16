@@ -69,7 +69,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.c.execute("CREATE TABLE IF NOT EXISTS nielsen(title text, regdate text)")
 
         except Exception as e :
-            logging.info("__init__ : {}".format(e))
+            logging.info(">>>>> __init__ error : {}".format(e))
             pass
 
 # ---------------------------------------------------------------------------------
@@ -97,7 +97,6 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
     # Daily Trends
     @pyqtSlot(str, str)
     def dtSetTitle(self, title, href):
-        logging.info("dtSetTitle")
         try :
             self.dtLi = [self.dailyTrend_Title1, self.dailyTrend_Title2, self.dailyTrend_Title3, self.dailyTrend_Title4, self.dailyTrend_Title5]
             self.dtLi[self.dt_idx].setText(title)
@@ -106,25 +105,29 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             if self.c.execute("SELECT title FROM dailyTrends WHERE title = ?", (title,)).fetchone() :
                 self.dtLi[self.dt_idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
 
-            # link link
+            # link the link
             self.dtLi[self.dt_idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
             idx = self.dt_idx
             self.dtLi[self.dt_idx].clicked.connect(lambda : self.dtClicked(href, title, idx))
             self.dt_idx += 1
 
         except Exception as e :
-            logging.info("dtSetTitle : {}".format(e))
+            logging.info(">>>>> def dtSetTitle error : {}".format(e))
             pass
 
     def dtClicked(self, href, title, idx):
-        self.dc = DtClicked(href)
-        self.dc.start()
+        try :
+            self.dc = DtClicked(href)
+            self.dc.start()
 
-        # insert into the db only when there is no same thing
-        if self.c.execute("SELECT title FROM dailyTrends WHERE title = ?", (title,)).fetchone() is None:
-            self.c.execute("INSERT INTO dailyTrends VALUES(?, ?)", (title, self.nowDateTime,))
-            self.conn.commit()
-            self.dtLi[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+            # insert into the db only when there is no same thing
+            if self.c.execute("SELECT title FROM dailyTrends WHERE title = ?", (title,)).fetchone() is None:
+                self.c.execute("INSERT INTO dailyTrends VALUES(?, ?)", (title, self.nowDateTime,))
+                self.conn.commit()
+                self.dtLi[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+        except Exception as e:
+            logging.info(">>>>> def dtClicked error : {}".format(e))
+            pass
 
     # korean click
     @pyqtSlot(str, str, str)
@@ -173,6 +176,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 self.kc_Date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
         except Exception as e:
             logging.info(">>>>> def kcClicked error : {}".format(e))
+            pass
 
 
     # nielsen
@@ -191,17 +195,20 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.n_Press_idx += 1
 
         except Exception as e :
-            logging.info(">>>>> set_N_Press_Title : {}".format(e))
+            logging.info(">>>>> set_N_Press_Title error : {}".format(e))
             pass
 
     def nClicked(self, href):
-        self.nced = NClicked(href)
-        self.nced.start()
+        try :
+            self.nced = NClicked(href)
+            self.nced.start()
+        except Exception as e:
+            logging.info(">>>>> nClicked error : {}".format(e))
+            pass
 
 if (__name__ == "__main__") :
     app = QtWidgets.QApplication(sys.argv)
     window = Main()
     window.show()
     app.exec_()
-
 

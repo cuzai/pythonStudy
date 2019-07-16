@@ -31,7 +31,7 @@ class DailyTrends(QThread) :
                 'group': 'default'
             })
         except Exception as e :
-            logging.info("DailyTrends __init__".format(e))
+            logging.info(">>>>> DailyTrends __init__ error : {}".format(e))
             pass
 
     def run(self):
@@ -45,7 +45,7 @@ class DailyTrends(QThread) :
                         # logging.info(login_req.status_code)
                         break
                     except Exception as e:
-                        logging.info("myError = {}".format(e))
+                        logging.info(">>>>> DailyTrends login error = {}".format(e))
                         continue
 
                 if (login_req.status_code == 200 and login_req.ok):

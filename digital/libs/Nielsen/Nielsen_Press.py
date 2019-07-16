@@ -1,3 +1,5 @@
+import logging
+
 import requests
 from PyQt5.QtCore import QThread, pyqtSignal
 from bs4 import BeautifulSoup
@@ -11,7 +13,13 @@ class Nielsen_Press(QThread) :
         self.howMany = howMany
 
     def run(self):
-        url = requests.get(self.url).content
+        while(True) :
+            try :
+                url = requests.get(self.url).content
+                break
+            except Exception as e :
+                logging.info("Nielsen Press request error : {}".format(e))
+                continue
         soup = BeautifulSoup(url, 'html.parser')
         temp = soup.select('.col-sm-9 > article')
         for n, i in enumerate(temp) :
