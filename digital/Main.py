@@ -1,3 +1,7 @@
+print("프로그램을 여는 중입니다.")
+print("컴퓨터 사양에 따라 10초정도 소요될 수 있습니다.")
+print("프로그램을 종료할 때까지 이 창을 끄지 마십시오")
+
 import datetime
 import sqlite3
 import time
@@ -162,6 +166,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 self.c.execute("INSERT INTO dailyTrends VALUES(?, ?)", (title, self.nowDateTime,))
                 self.conn.commit()
                 self.dtLi[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                self.dt_Date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
         except Exception as e:
             logging.info(">>>>> def dtClicked error : {}".format(e))
             pass

@@ -15,7 +15,7 @@ class Nielsen_Press(QThread) :
     def run(self):
         while(True) :
             try :
-                url = requests.get(self.url).content
+                url = requests.get(self.url, verify = False).content
                 break
             except Exception as e :
                 logging.info("Nielsen Press request error : {}".format(e))
