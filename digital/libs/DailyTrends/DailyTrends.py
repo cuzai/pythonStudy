@@ -7,7 +7,7 @@ import re
 logging.basicConfig(level = logging.INFO)
 
 class DailyTrends(QThread) :
-    finished = pyqtSignal(str, str, str)
+    finished = pyqtSignal(str, str, str, str)
     error = pyqtSignal(str)
 
     def __init__(self, howMany):
@@ -84,7 +84,7 @@ class DailyTrends(QThread) :
                         p = re.compile('((\\S*\\s*)*) - 데일리트렌드')
                         m = p.search(temp.text)
                         title = m.group(1)
-                        self.finished.emit(title, link, date)
+                        self.finished.emit("dailyTrends", title, link, date)
                         if (n == self.howMany - 1) :
                             break
         except Exception as e :

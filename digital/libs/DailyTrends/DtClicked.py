@@ -23,7 +23,5 @@ class DtClicked(QThread):
             logging.info(">>>>> DtClicked error : {}".format(e))
             pass
 
-
-
 if __name__ == "__main__":
     DtClicked('https://www.dailytrend.co.kr/login/').run()

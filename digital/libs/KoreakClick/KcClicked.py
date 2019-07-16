@@ -10,8 +10,8 @@ class KcClicked(QThread) :
 
     def run(self):
         try :
-            driver = webdriver.Chrome('./webdriver/chrome/chromedriver')
-            driver.get(self.url)
+            self.driver = webdriver.Chrome('./webdriver/chrome/chromedriver')
+            self.driver.get(self.url)
         except Exception as e :
             logging.info(">>>>> KcClicked error : {}".format(e))
             pass

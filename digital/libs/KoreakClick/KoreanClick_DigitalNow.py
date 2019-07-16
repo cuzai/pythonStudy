@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from PyQt5.QtCore import QThread, pyqtSignal
 
 class KoreanClick_DigitalNow(QThread) :
-    finished = pyqtSignal(str, str,str)
+    finished = pyqtSignal(str, str,str, str)
     error = pyqtSignal(str)
     def __init__(self, howMany):
         super().__init__()
@@ -29,7 +29,7 @@ class KoreanClick_DigitalNow(QThread) :
                 title = temp[n+1].select_one('.tb_txt')
                 href = title.select_one('a')['href']
                 date = temp[n+1].select('.tb_txt_center')[1].text
-                self.finished.emit(title.text, href, date)
+                self.finished.emit("koreanClick_Digital", title.text, href, date)
                 logging.info("KoreanClick_Internet Emit")
                 if n == self.howMany-1 :
                     break

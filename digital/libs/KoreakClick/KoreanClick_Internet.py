@@ -4,7 +4,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 import logging
 
 class KoreanClick_Internet(QThread) :
-    finished = pyqtSignal(str, str, str)
+    finished = pyqtSignal(str, str, str, str)
     error = pyqtSignal(str)
     def __init__(self, howMany):
         logging.info("KoreanClick_Internet __init__")
@@ -35,7 +35,7 @@ class KoreanClick_Internet(QThread) :
                 title = temp[n+1].select_one('.tb_txt')
                 href = title.select_one('a')['href']
                 date = temp[n+1].select('.tb_txt_center')[2].text
-                self.finished.emit(title.text, href, date)
+                self.finished.emit("koreanClick_Internet", title.text, href, date)
                 if n == self.howMany-1 :
                     break
             print()
