@@ -2,7 +2,6 @@ print("프로그램을 여는 중입니다.")
 print("컴퓨터 사양에 따라 최대 10초까지 소요될 수 있습니다.")
 print("프로그램을 종료할 때까지 이 창을 끄지 마십시오")
 
-
 import datetime
 import sqlite3
 import time
@@ -15,14 +14,13 @@ from libs.KoreakClick.KoreanClick_BuzzWord import KoreanClick_BuzzWord
 from libs.KoreakClick.KoreanClick_DigitalNow import KoreanClick_DigitalNow
 from libs.KoreakClick.KoreanClick_Internet import KoreanClick_Internet
 from libs.KoreakClick.KoreanClick_Topic import KoreanClick_Topic
+
 from libs.Nielsen.Nielsen_Press import Nielsen_Press
 from libs.Nielsen.Nielsen_Insight import Nielsen_Insight
 from libs.Nielsen.NClicked import NClicked
 
 from libs.DailyTrends.DailyTrends import DailyTrends
 from libs.DailyTrends.DtClicked import DtClicked
-from libs.Rankey.RankeyTitle import RankeyTitle
-from libs.Rankey.RankeyImg import RankeyImg
 
 from ui.myUi import Ui_MainWindow
 import sys
@@ -31,12 +29,14 @@ import logging
 form_class = uic.loadUiType('./ui/main.ui')[0]
 class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
     howMany = 5
+
     kc_internet_idx = 0
     kc_topic_idx = 0
     kc_digital_idx = 0
     kc_buzz_idx = 0
 
     dt_idx = 0
+
     n_Press_idx = 0
     n_Insight_idx = 0
 
@@ -86,7 +86,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             time.sleep(0.2)
 
             self.nielsen_Insight = Nielsen_Insight(self.howMany)
-            self.nielsen_Insight.finished.connect(self.set_N_Insight_Title)
+            self.nielsen_Insight.finished.connect(self.setTitle)
             self.nielsen_Insight.start()
             time.sleep(0.2)
 
@@ -133,6 +133,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             title_Li = [self.nielsen_Press_title1, self.nielsen_Press_title2, self.nielsen_Press_title3, self.nielsen_Press_title4, self.nielsen_Press_title5]
             date_Li = [self.Nielsen_Press_Date1, self.Nielsen_Press_Date2, self.Nielsen_Press_Date3, self.Nielsen_Press_Date4, self.Nielsen_Press_Date5]
             idx = self.n_Press_idx
+        elif name == "nielsen_Insight" :
+            title_Li = [self.nielsen_Insight_title1, self.nielsen_Insight_title2, self.nielsen_Insight_title3]
+            date_Li = [self.nielsen_Insight_Date1, self.nielsen_Insight_Date2, self.nielsen_Insight_Date3]
+            idx = self.n_Insight_idx
 
         title_Li[idx].setText(title)
         date_Li[idx].setText(date)
@@ -156,6 +160,8 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.kc_buzz_idx += 1
         elif name == "nielsen_Press" :
             self.n_Press_idx += 1
+        elif name == "nielsen_Insight" :
+            self.n_Insight_idx += 1
 
     def whenClicked(self, name, href, title, idx, title_Li, date_Li):
         try :
@@ -163,7 +169,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 clicked = DtClicked(href)
             elif name == "koreanClick_Internet" or name == "koreanClick_Topic" or name == "koreanClick_Digital" or name == "koreanClick_Buzz":
                 clicked = KcClicked(href)
-            elif name == "nielsen_Press" :
+            elif name == "nielsen_Press" or name == "nielsen_Insight" :
                 clicked = NClicked(href)
             clicked.start()
 

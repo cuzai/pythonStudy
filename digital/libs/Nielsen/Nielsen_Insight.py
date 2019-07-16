@@ -5,7 +5,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from bs4 import BeautifulSoup
 
 class Nielsen_Insight(QThread) :
-    finished = pyqtSignal(str, str, str)
+    finished = pyqtSignal(str, str, str, str)
 
     def __init__(self, howMany):
         super().__init__()
@@ -27,7 +27,7 @@ class Nielsen_Insight(QThread) :
 
             link = i.select_one('h2 a')['href']
             time = i.select_one('.updated.knockout.h5').text
-            self.finished.emit(title, link, time)
+            self.finished.emit("nielsen_Insight", title, link, time)
             if n == self.howMany-1 :
                 break
 
