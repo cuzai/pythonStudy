@@ -1,11 +1,10 @@
-import atexit
 import datetime
 import sqlite3
+import time
 
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
 from PyQt5.QtCore import pyqtSlot
 
-from libs.KoreakClick.KoreanClick import KoreanClick
 from libs.KoreakClick.KcClicked import KcClicked
 from libs.KoreakClick.KoreanClick_BuzzWord import KoreanClick_BuzzWord
 from libs.KoreakClick.KoreanClick_DigitalNow import KoreanClick_DigitalNow
@@ -55,35 +54,41 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
             # Daily Trends
             self.dailyTrend = DailyTrends(5)
+            self.dailyTrend.error.connect(self.myError)
             self.dailyTrend.finished.connect(self.dtSetTitle)
             self.dailyTrend.start()
+            time.sleep(0.2)
 
             # Korean Click
             self.kc_Internet = KoreanClick_Internet(self.howMany)
             self.kc_Internet.finished.connect(self.set_Kc_Internet_Title)
-            self.kc_Internet.error.connect(self.kcError)
+            self.kc_Internet.error.connect(self.myError)
             self.kc_Internet.start()
+            time.sleep(0.2)
 
             self.kc_Topic = KoreanClick_Topic(self.howMany)
             self.kc_Topic.finished.connect(self.set_Kc_Topic_Title)
-            self.kc_Topic.error.connect(self.kcError)
+            self.kc_Topic.error.connect(self.myError)
             self.kc_Topic.start()
+            time.sleep(0.2)
 
             self.kc_Digital = KoreanClick_DigitalNow(self.howMany)
             self.kc_Digital.finished.connect(self.set_Kc_Digital_Title)
-            self.kc_Digital.error.connect(self.kcError)
+            self.kc_Digital.error.connect(self.myError)
             self.kc_Digital.start()
+            time.sleep(0.2)
 
             self.kc_Buzz = KoreanClick_BuzzWord(self.howMany)
             self.kc_Buzz.finished.connect(self.set_Kc_Buzz_Title)
-            self.kc_Buzz.error.connect(self.kcError)
+            self.kc_Buzz.error.connect(self.myError)
             self.kc_Buzz.start()
-
+            time.sleep(0.2)
 
             # Nielsen
             self.nielsen_Press = Nielsen_Press(5)
             self.nielsen_Press.finished.connect(self.set_N_Press_Title)
             self.nielsen_Press.start()
+            time.sleep(0.2)
 
             # make db
             self.conn = sqlite3.connect('db/userData.db')
@@ -95,7 +100,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Topic(title text, regdate text)")
             self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Digital(title text, regdate text)")
             self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Buzz(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS nielsen(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS nielsen_Press(title text, regdate text)")
 
         except Exception as e :
             logging.info(">>>>> __init__ error : {}".format(e))
@@ -124,11 +129,14 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
     #
 
     # Daily Trends
-    @pyqtSlot(str, str)
-    def dtSetTitle(self, title, href):
+    @pyqtSlot(str, str, str)
+    def dtSetTitle(self, title, href, date):
         try :
             self.dtLi = [self.dailyTrend_Title1, self.dailyTrend_Title2, self.dailyTrend_Title3, self.dailyTrend_Title4, self.dailyTrend_Title5]
+            self.dt_Date_Li = [self.dailyTrend_Date1, self.dailyTrend_Date2, self.dailyTrend_Date3, self.dailyTrend_Date4, self.dailyTrend_Date5]
+
             self.dtLi[self.dt_idx].setText(title)
+            self.dt_Date_Li[self.dt_idx].setText(date)
 
             # if in db, make the title grey
             if self.c.execute("SELECT title FROM dailyTrends WHERE title = ?", (title,)).fetchone() :
@@ -277,7 +285,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             pass
 
     @pyqtSlot(str)
-    def kcError(self, name):
+    def myError(self, name):
         if name == "koreanClick_Internet" :
             self.kc_Internet_Title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.")
         elif name == "koreanClick_Topic" :
@@ -286,6 +294,8 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.kc_DN_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.")
         elif name == 'koreanClick_Buzz' :
             self.kc_BW_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.")
+        elif name == 'dailyTrend' :
+            self.dailyTrend_Title3.setText("데일리트렌드 인터넷 연결이 지연되고 있습니다.")
 
     # nielsen
     @pyqtSlot(str, str, str)
@@ -298,18 +308,35 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.n_Press_TitleLi[self.n_Press_idx].setText(title)
             self.n_Press_DateLi[self.n_Press_idx].setText(date)
 
+            # if in db, make the title grey
+            if self.c.execute("SELECT title FROM nielsen_Press WHERE title = ?", (title,)).fetchone() :
+                self.n_Press_TitleLi[self.kc_buzz_idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                self.n_Press_DateLi[self.kc_buzz_idx].setStyleSheet('color:grey')
+
+            idx = self.n_Press_idx
+
             self.n_Press_TitleLi[self.n_Press_idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-            self.n_Press_TitleLi[self.n_Press_idx].clicked.connect(lambda: self.nClicked(href))
+            self.n_Press_TitleLi[self.n_Press_idx].clicked.connect(lambda: self.nClicked(href, title, idx, 'nielsen_Press'))
             self.n_Press_idx += 1
 
         except Exception as e :
             logging.info(">>>>> set_N_Press_Title error : {}".format(e))
             pass
 
-    def nClicked(self, href):
+    def nClicked(self, href, title, idx, name):
         try :
             self.nced = NClicked(href)
             self.nced.start()
+
+            # insert into the db only when there is no same thing
+            if self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone() is None:
+                self.c.execute("INSERT INTO " + name + " VALUES(?, ?)", (title, self.nowDateTime,))
+                self.conn.commit()
+
+                if name == 'nielsen_Press':
+                    self.n_Press_TitleLi[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                    self.n_Press_DateLi[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+
         except Exception as e:
             logging.info(">>>>> nClicked error : {}".format(e))
             pass

@@ -7,7 +7,8 @@ import re
 logging.basicConfig(level = logging.INFO)
 
 class DailyTrends(QThread) :
-    finished = pyqtSignal(str, str)
+    finished = pyqtSignal(str, str, str)
+    error = pyqtSignal(str)
 
     def __init__(self, howMany):
         logging.info("DailyTrends __init__")
@@ -45,6 +46,7 @@ class DailyTrends(QThread) :
                         # logging.info(login_req.status_code)
                         break
                     except Exception as e:
+                        self.error.emit('dailyTrend')
                         logging.info(">>>>> DailyTrends login error = {}".format(e))
                         continue
 
@@ -55,31 +57,39 @@ class DailyTrends(QThread) :
                             url = s.get(self.parseUrl)
                             break
                         except Exception :
+                            self.error.emit('dailyTrend')
                             logging.info(">>>>> DaliyTrends parseUrl error : {}".format(e))
                             continue
-                    soup = BeautifulSoup(url.content, 'html.parser')
-                    # logging.info("got to the point")
+                    soup1 = BeautifulSoup(url.content, 'html.parser')
 
                     # get article name
                     # get the link
-                    article = soup.select('article .post-item-title.grid-title a')
+                    article = soup1.select('article .post-item-title.grid-title a')
                     for n, i in enumerate(article):
                         link = i['href']
                         self.href.append(link)
 
                         # get to the link and get title. this takes some time
-                        url = s.get(link)
+                        try :
+                            url = s.get(link)
+                        except Exception as e :
+                            self.error.emit("dailyTrend")
+                            logging.info(">>>>> DailyTrends individual article error : {}".format(e))
+                            continue
+
                         soup = BeautifulSoup(url.content, 'html.parser')
+                        date = soup1.select('.updated')[n].text
+
                         temp = soup.select_one('title')
                         p = re.compile('((\\S*\\s*)*) - 데일리트렌드')
                         m = p.search(temp.text)
                         title = m.group(1)
-                        self.finished.emit(title, link)
-                        # logging.info("emit")
+                        self.finished.emit(title, link, date)
                         if (n == self.howMany - 1) :
                             break
         except Exception as e :
-            logging.info(e)
+            logging.info("DailyTrends error : {}".format(e))
+            pass
 
 
 if (__name__ == "__main__"):
