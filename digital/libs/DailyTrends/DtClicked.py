@@ -20,7 +20,7 @@ class DtClicked(QThread):
             self.driver.find_elements_by_css_selector('.userpro-input')[1].find_element_by_css_selector('input').send_keys('fhtepqorghkwja5')
             self.driver.find_element_by_css_selector('.userpro-button').click()
         except Exception as e :
-            print(e)
+            logging.info(">>>>> DtClicked error : {}".format(e))
 
 
 

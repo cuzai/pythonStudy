@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1525</width>
-    <height>869</height>
+    <width>1326</width>
+    <height>692</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -58,9 +58,9 @@ border: none;
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-1954</y>
-         <width>1455</width>
-         <height>2797</height>
+         <y>-755</y>
+         <width>1256</width>
+         <height>1486</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
@@ -119,15 +119,24 @@ QGroupBox::title {
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
             <widget class="QLabel" name="label">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
-               <width>600</width>
+               <width>400</width>
                <height>16777215</height>
               </size>
              </property>
@@ -149,6 +158,12 @@ QGroupBox::title {
              <property name="enabled">
               <bool>true</bool>
              </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="font">
               <font>
                <family>나눔고딕</family>
@@ -169,7 +184,7 @@ QGroupBox::title {
           </layout>
          </widget>
         </item>
-        <item row="4" column="0">
+        <item row="3" column="0">
          <widget class="QGroupBox" name="groupBox_8">
           <property name="minimumSize">
            <size>
@@ -188,11 +203,11 @@ QGroupBox::title {
           <property name="styleSheet">
            <string notr="true">QGroupBox{
     border: 1px solid black;
-    margin-top: 1em;
+    margin-top: 1.5em;
 }
 
 QGroupBox::title {
-    top: -20px;
+    top: -15px;
     left: 20px;
 }</string>
           </property>
@@ -201,7 +216,7 @@ QGroupBox::title {
           </property>
           <layout class="QGridLayout" name="gridLayout_11">
            <property name="topMargin">
-            <number>50</number>
+            <number>40</number>
            </property>
            <item row="0" column="0">
             <widget class="QGroupBox" name="groupBox_9">
@@ -222,11 +237,11 @@ QGroupBox::title {
              <property name="styleSheet">
               <string notr="true">QGroupBox{
     border: 0px solid rgb(220, 220, 220);
-    margin-top: 1em;
+    margin-top: 0em;
 }
 
 QGroupBox::title {
-    top: -20px;
+    top: 0px;
     left: 20px;
 }</string>
              </property>
@@ -867,154 +882,6 @@ background: transparent;</string>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QGroupBox" name="groupBox">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>1400</width>
-            <height>500</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>나눔고딕</family>
-            <pointsize>20</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="cursor">
-           <cursorShape>ArrowCursor</cursorShape>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QGroupBox{
-    border: 1px solid black;
-    margin-top: 1em;
-}
-
-QGroupBox::title {
-    top: -20px;
-    left: 20px;
-}</string>
-          </property>
-          <property name="title">
-           <string>IT 트렌드</string>
-          </property>
-          <property name="flat">
-           <bool>false</bool>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_3">
-           <property name="leftMargin">
-            <number>20</number>
-           </property>
-           <property name="topMargin">
-            <number>50</number>
-           </property>
-           <item row="0" column="0">
-            <widget class="QGroupBox" name="groupBox_7">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>나눔고딕</family>
-               <pointsize>14</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QGroupBox{
-    border: 0px solid rgb(220, 220, 220);
-    margin-top: 1em;
-}
-
-QGroupBox::title {
-    top: -20px;
-    left: 20px;
-}</string>
-             </property>
-             <property name="title">
-              <string>트렌드 버드</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout">
-              <property name="leftMargin">
-               <number>20</number>
-              </property>
-              <property name="topMargin">
-               <number>23</number>
-              </property>
-              <item>
-               <widget class="QTabWidget" name="tabWidget">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>300</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>300</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>나눔고딕</family>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="currentIndex">
-                 <number>0</number>
-                </property>
-                <widget class="QWidget" name="tab">
-                 <attribute name="title">
-                  <string>Business</string>
-                 </attribute>
-                </widget>
-                <widget class="QWidget" name="tab_2">
-                 <attribute name="title">
-                  <string>Tech</string>
-                 </attribute>
-                </widget>
-                <widget class="QWidget" name="tab_3">
-                 <attribute name="title">
-                  <string>Design</string>
-                 </attribute>
-                </widget>
-                <widget class="QWidget" name="tab_4">
-                 <attribute name="title">
-                  <string>Product</string>
-                 </attribute>
-                </widget>
-                <widget class="QWidget" name="tab_5">
-                 <attribute name="title">
-                  <string>Consumer</string>
-                 </attribute>
-                </widget>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="3" column="0">
          <widget class="QGroupBox" name="groupBox_2">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1024,8 +891,8 @@ QGroupBox::title {
           </property>
           <property name="minimumSize">
            <size>
-            <width>1400</width>
-            <height>1550</height>
+            <width>900</width>
+            <height>800</height>
            </size>
           </property>
           <property name="font">
@@ -1039,11 +906,11 @@ QGroupBox::title {
           <property name="styleSheet">
            <string notr="true">QGroupBox{
     border: 1px solid black;
-    margin-top: 1em;
+    margin-top: 1.5em;
 }
 
 QGroupBox::title {
-    top: -20px;
+    top: -15px;
     left: 20px;
 }</string>
           </property>
@@ -1097,11 +964,11 @@ QGroupBox::title {
              <property name="styleSheet">
               <string notr="true">QGroupBox{
     border: 0px solid rgb(220, 220, 220);
-    margin-top: 1em;
+    margin-top: 0em;
 }
 
 QGroupBox::title {
-    top: -20px;
+    top: 0px;
     left: 20px;
 }</string>
              </property>
@@ -1113,7 +980,7 @@ QGroupBox::title {
                <number>40</number>
               </property>
               <property name="topMargin">
-               <number>20</number>
+               <number>40</number>
               </property>
               <item row="3" column="0">
                <widget class="QPushButton" name="dailyTrend_Title4">
@@ -1216,167 +1083,7 @@ background: transparent;</string>
              </layout>
             </widget>
            </item>
-           <item row="3" column="0">
-            <widget class="QGroupBox" name="groupBox_5">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>나눔고딕</family>
-               <pointsize>14</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QGroupBox{
-    border: 0px solid rgb(220, 220, 220);
-    margin-top: 1em;
-}
-
-QGroupBox::title {
-    top: -20px;
-    left: 20px;
-}</string>
-             </property>
-             <property name="title">
-              <string>리테일 매거진</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_6">
-              <property name="leftMargin">
-               <number>20</number>
-              </property>
-              <property name="topMargin">
-               <number>20</number>
-              </property>
-              <item row="0" column="0">
-               <widget class="QTabWidget" name="tabWidget_2">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>300</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>300</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>나눔고딕</family>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="currentIndex">
-                 <number>0</number>
-                </property>
-                <widget class="QWidget" name="tab_6">
-                 <attribute name="title">
-                  <string>Coverstory</string>
-                 </attribute>
-                 <layout class="QGridLayout" name="gridLayout_10">
-                  <item row="0" column="0">
-                   <widget class="QScrollArea" name="scrollArea_4">
-                    <property name="widgetResizable">
-                     <bool>true</bool>
-                    </property>
-                    <widget class="QWidget" name="scrollAreaWidgetContents_5">
-                     <property name="geometry">
-                      <rect>
-                       <x>0</x>
-                       <y>0</y>
-                       <width>1325</width>
-                       <height>233</height>
-                      </rect>
-                     </property>
-                    </widget>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-                <widget class="QWidget" name="tab_7">
-                 <attribute name="title">
-                  <string>Special Story</string>
-                 </attribute>
-                </widget>
-                <widget class="QWidget" name="tab_8">
-                 <attribute name="title">
-                  <string>Field Story</string>
-                 </attribute>
-                </widget>
-                <widget class="QWidget" name="tab_9">
-                 <attribute name="title">
-                  <string>Biz Insight</string>
-                 </attribute>
-                </widget>
-                <widget class="QWidget" name="tab_10">
-                 <attribute name="title">
-                  <string>Store</string>
-                 </attribute>
-                </widget>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
            <item row="2" column="0">
-            <widget class="QGroupBox" name="groupBox_4">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>300</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>300</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>나눔고딕</family>
-               <pointsize>14</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="title">
-              <string>퍼블리</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
             <widget class="QGroupBox" name="groupBox_6">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1407,11 +1114,11 @@ QGroupBox::title {
              <property name="styleSheet">
               <string notr="true">QGroupBox{
     border: 0px solid rgb(220, 220, 220);
-    margin-top: 1em;
+    margin-top: 0em;
 }
 
 QGroupBox::title {
-    top: -20px;
+    top: 0px;
     left: 20px;
 }</string>
              </property>
@@ -1423,7 +1130,7 @@ QGroupBox::title {
                <number>20</number>
               </property>
               <property name="topMargin">
-               <number>20</number>
+               <number>40</number>
               </property>
               <item row="0" column="0">
                <widget class="QTabWidget" name="tabWidget_3">

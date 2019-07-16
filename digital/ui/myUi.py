@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1525, 869)
+        MainWindow.resize(1326, 692)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -36,7 +36,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -1954, 1455, 2797))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -755, 1256, 1486))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setContentsMargins(0, 0, 30, 30)
@@ -65,12 +65,14 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.groupBox_10)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label = QtWidgets.QLabel(self.groupBox_10)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        self.label.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
-        self.label.setMaximumSize(QtCore.QSize(600, 16777215))
+        self.label.setMinimumSize(QtCore.QSize(0, 0))
+        self.label.setMaximumSize(QtCore.QSize(400, 16777215))
         font = QtGui.QFont()
         font.setFamily("나눔고딕 ExtraBold")
         font.setPointSize(36)
@@ -81,6 +83,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.label)
         self.label_2 = QtWidgets.QLabel(self.groupBox_10)
         self.label_2.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("나눔고딕")
         font.setPointSize(16)
@@ -102,16 +109,16 @@ class Ui_MainWindow(object):
         self.groupBox_8.setFont(font)
         self.groupBox_8.setStyleSheet("QGroupBox{\n"
 "    border: 1px solid black;\n"
-"    margin-top: 1em;\n"
+"    margin-top: 1.5em;\n"
 "}\n"
 "\n"
 "QGroupBox::title {\n"
-"    top: -20px;\n"
+"    top: -15px;\n"
 "    left: 20px;\n"
 "}")
         self.groupBox_8.setObjectName("groupBox_8")
         self.gridLayout_11 = QtWidgets.QGridLayout(self.groupBox_8)
-        self.gridLayout_11.setContentsMargins(-1, 50, -1, -1)
+        self.gridLayout_11.setContentsMargins(-1, 40, -1, -1)
         self.gridLayout_11.setObjectName("gridLayout_11")
         self.groupBox_9 = QtWidgets.QGroupBox(self.groupBox_8)
         self.groupBox_9.setMinimumSize(QtCore.QSize(0, 0))
@@ -123,11 +130,11 @@ class Ui_MainWindow(object):
         self.groupBox_9.setFont(font)
         self.groupBox_9.setStyleSheet("QGroupBox{\n"
 "    border: 0px solid rgb(220, 220, 220);\n"
-"    margin-top: 1em;\n"
+"    margin-top: 0em;\n"
 "}\n"
 "\n"
 "QGroupBox::title {\n"
-"    top: -20px;\n"
+"    top: 0px;\n"
 "    left: 20px;\n"
 "}")
         self.groupBox_9.setObjectName("groupBox_9")
@@ -478,94 +485,14 @@ class Ui_MainWindow(object):
         self.kc_Internet_Date1_3.setObjectName("kc_Internet_Date1_3")
         self.gridLayout_9.addWidget(self.kc_Internet_Date1_3, 0, 0, 1, 1)
         self.gridLayout_11.addWidget(self.groupBox_9, 0, 0, 1, 1)
-        self.gridLayout_2.addWidget(self.groupBox_8, 4, 0, 1, 1)
-        self.groupBox = QtWidgets.QGroupBox(self.scrollAreaWidgetContents)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox.sizePolicy().hasHeightForWidth())
-        self.groupBox.setSizePolicy(sizePolicy)
-        self.groupBox.setMinimumSize(QtCore.QSize(1400, 500))
-        font = QtGui.QFont()
-        font.setFamily("나눔고딕")
-        font.setPointSize(20)
-        font.setBold(True)
-        font.setWeight(75)
-        self.groupBox.setFont(font)
-        self.groupBox.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
-        self.groupBox.setStyleSheet("QGroupBox{\n"
-"    border: 1px solid black;\n"
-"    margin-top: 1em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    top: -20px;\n"
-"    left: 20px;\n"
-"}")
-        self.groupBox.setFlat(False)
-        self.groupBox.setObjectName("groupBox")
-        self.gridLayout_3 = QtWidgets.QGridLayout(self.groupBox)
-        self.gridLayout_3.setContentsMargins(20, 50, -1, -1)
-        self.gridLayout_3.setObjectName("gridLayout_3")
-        self.groupBox_7 = QtWidgets.QGroupBox(self.groupBox)
-        self.groupBox_7.setMinimumSize(QtCore.QSize(0, 0))
-        font = QtGui.QFont()
-        font.setFamily("나눔고딕")
-        font.setPointSize(14)
-        font.setBold(True)
-        font.setWeight(75)
-        self.groupBox_7.setFont(font)
-        self.groupBox_7.setStyleSheet("QGroupBox{\n"
-"    border: 0px solid rgb(220, 220, 220);\n"
-"    margin-top: 1em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    top: -20px;\n"
-"    left: 20px;\n"
-"}")
-        self.groupBox_7.setObjectName("groupBox_7")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.groupBox_7)
-        self.verticalLayout.setContentsMargins(20, 23, -1, -1)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.tabWidget = QtWidgets.QTabWidget(self.groupBox_7)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.tabWidget.sizePolicy().hasHeightForWidth())
-        self.tabWidget.setSizePolicy(sizePolicy)
-        self.tabWidget.setMinimumSize(QtCore.QSize(0, 300))
-        self.tabWidget.setMaximumSize(QtCore.QSize(16777215, 300))
-        font = QtGui.QFont()
-        font.setFamily("나눔고딕")
-        font.setPointSize(12)
-        self.tabWidget.setFont(font)
-        self.tabWidget.setObjectName("tabWidget")
-        self.tab = QtWidgets.QWidget()
-        self.tab.setObjectName("tab")
-        self.tabWidget.addTab(self.tab, "")
-        self.tab_2 = QtWidgets.QWidget()
-        self.tab_2.setObjectName("tab_2")
-        self.tabWidget.addTab(self.tab_2, "")
-        self.tab_3 = QtWidgets.QWidget()
-        self.tab_3.setObjectName("tab_3")
-        self.tabWidget.addTab(self.tab_3, "")
-        self.tab_4 = QtWidgets.QWidget()
-        self.tab_4.setObjectName("tab_4")
-        self.tabWidget.addTab(self.tab_4, "")
-        self.tab_5 = QtWidgets.QWidget()
-        self.tab_5.setObjectName("tab_5")
-        self.tabWidget.addTab(self.tab_5, "")
-        self.verticalLayout.addWidget(self.tabWidget)
-        self.gridLayout_3.addWidget(self.groupBox_7, 0, 0, 1, 1)
-        self.gridLayout_2.addWidget(self.groupBox, 2, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.groupBox_8, 3, 0, 1, 1)
         self.groupBox_2 = QtWidgets.QGroupBox(self.scrollAreaWidgetContents)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.groupBox_2.sizePolicy().hasHeightForWidth())
         self.groupBox_2.setSizePolicy(sizePolicy)
-        self.groupBox_2.setMinimumSize(QtCore.QSize(1400, 1550))
+        self.groupBox_2.setMinimumSize(QtCore.QSize(900, 800))
         font = QtGui.QFont()
         font.setFamily("나눔고딕")
         font.setPointSize(20)
@@ -574,11 +501,11 @@ class Ui_MainWindow(object):
         self.groupBox_2.setFont(font)
         self.groupBox_2.setStyleSheet("QGroupBox{\n"
 "    border: 1px solid black;\n"
-"    margin-top: 1em;\n"
+"    margin-top: 1.5em;\n"
 "}\n"
 "\n"
 "QGroupBox::title {\n"
-"    top: -20px;\n"
+"    top: -15px;\n"
 "    left: 20px;\n"
 "}")
         self.groupBox_2.setFlat(False)
@@ -604,16 +531,16 @@ class Ui_MainWindow(object):
         self.groupBox_3.setFont(font)
         self.groupBox_3.setStyleSheet("QGroupBox{\n"
 "    border: 0px solid rgb(220, 220, 220);\n"
-"    margin-top: 1em;\n"
+"    margin-top: 0em;\n"
 "}\n"
 "\n"
 "QGroupBox::title {\n"
-"    top: -20px;\n"
+"    top: 0px;\n"
 "    left: 20px;\n"
 "}")
         self.groupBox_3.setObjectName("groupBox_3")
         self.gridLayout_12 = QtWidgets.QGridLayout(self.groupBox_3)
-        self.gridLayout_12.setContentsMargins(40, 20, -1, -1)
+        self.gridLayout_12.setContentsMargins(40, 40, -1, -1)
         self.gridLayout_12.setObjectName("gridLayout_12")
         self.dailyTrend_Title4 = QtWidgets.QPushButton(self.groupBox_3)
         font = QtGui.QFont()
@@ -670,89 +597,6 @@ class Ui_MainWindow(object):
         self.label_3.setObjectName("label_3")
         self.gridLayout_12.addWidget(self.label_3, 0, 1, 1, 1)
         self.gridLayout_4.addWidget(self.groupBox_3, 0, 0, 1, 1)
-        self.groupBox_5 = QtWidgets.QGroupBox(self.groupBox_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox_5.sizePolicy().hasHeightForWidth())
-        self.groupBox_5.setSizePolicy(sizePolicy)
-        self.groupBox_5.setMinimumSize(QtCore.QSize(0, 0))
-        self.groupBox_5.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        font = QtGui.QFont()
-        font.setFamily("나눔고딕")
-        font.setPointSize(14)
-        font.setBold(True)
-        font.setWeight(75)
-        self.groupBox_5.setFont(font)
-        self.groupBox_5.setStyleSheet("QGroupBox{\n"
-"    border: 0px solid rgb(220, 220, 220);\n"
-"    margin-top: 1em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    top: -20px;\n"
-"    left: 20px;\n"
-"}")
-        self.groupBox_5.setObjectName("groupBox_5")
-        self.gridLayout_6 = QtWidgets.QGridLayout(self.groupBox_5)
-        self.gridLayout_6.setContentsMargins(20, 20, -1, -1)
-        self.gridLayout_6.setObjectName("gridLayout_6")
-        self.tabWidget_2 = QtWidgets.QTabWidget(self.groupBox_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.tabWidget_2.sizePolicy().hasHeightForWidth())
-        self.tabWidget_2.setSizePolicy(sizePolicy)
-        self.tabWidget_2.setMinimumSize(QtCore.QSize(0, 300))
-        self.tabWidget_2.setMaximumSize(QtCore.QSize(16777215, 300))
-        font = QtGui.QFont()
-        font.setFamily("나눔고딕")
-        font.setPointSize(12)
-        self.tabWidget_2.setFont(font)
-        self.tabWidget_2.setObjectName("tabWidget_2")
-        self.tab_6 = QtWidgets.QWidget()
-        self.tab_6.setObjectName("tab_6")
-        self.gridLayout_10 = QtWidgets.QGridLayout(self.tab_6)
-        self.gridLayout_10.setObjectName("gridLayout_10")
-        self.scrollArea_4 = QtWidgets.QScrollArea(self.tab_6)
-        self.scrollArea_4.setWidgetResizable(True)
-        self.scrollArea_4.setObjectName("scrollArea_4")
-        self.scrollAreaWidgetContents_5 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_5.setGeometry(QtCore.QRect(0, 0, 1325, 233))
-        self.scrollAreaWidgetContents_5.setObjectName("scrollAreaWidgetContents_5")
-        self.scrollArea_4.setWidget(self.scrollAreaWidgetContents_5)
-        self.gridLayout_10.addWidget(self.scrollArea_4, 0, 0, 1, 1)
-        self.tabWidget_2.addTab(self.tab_6, "")
-        self.tab_7 = QtWidgets.QWidget()
-        self.tab_7.setObjectName("tab_7")
-        self.tabWidget_2.addTab(self.tab_7, "")
-        self.tab_8 = QtWidgets.QWidget()
-        self.tab_8.setObjectName("tab_8")
-        self.tabWidget_2.addTab(self.tab_8, "")
-        self.tab_9 = QtWidgets.QWidget()
-        self.tab_9.setObjectName("tab_9")
-        self.tabWidget_2.addTab(self.tab_9, "")
-        self.tab_10 = QtWidgets.QWidget()
-        self.tab_10.setObjectName("tab_10")
-        self.tabWidget_2.addTab(self.tab_10, "")
-        self.gridLayout_6.addWidget(self.tabWidget_2, 0, 0, 1, 1)
-        self.gridLayout_4.addWidget(self.groupBox_5, 3, 0, 1, 1)
-        self.groupBox_4 = QtWidgets.QGroupBox(self.groupBox_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox_4.sizePolicy().hasHeightForWidth())
-        self.groupBox_4.setSizePolicy(sizePolicy)
-        self.groupBox_4.setMinimumSize(QtCore.QSize(0, 300))
-        self.groupBox_4.setMaximumSize(QtCore.QSize(16777215, 300))
-        font = QtGui.QFont()
-        font.setFamily("나눔고딕")
-        font.setPointSize(14)
-        font.setBold(True)
-        font.setWeight(75)
-        self.groupBox_4.setFont(font)
-        self.groupBox_4.setObjectName("groupBox_4")
-        self.gridLayout_4.addWidget(self.groupBox_4, 2, 0, 1, 1)
         self.groupBox_6 = QtWidgets.QGroupBox(self.groupBox_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -769,16 +613,16 @@ class Ui_MainWindow(object):
         self.groupBox_6.setFont(font)
         self.groupBox_6.setStyleSheet("QGroupBox{\n"
 "    border: 0px solid rgb(220, 220, 220);\n"
-"    margin-top: 1em;\n"
+"    margin-top: 0em;\n"
 "}\n"
 "\n"
 "QGroupBox::title {\n"
-"    top: -20px;\n"
+"    top: 0px;\n"
 "    left: 20px;\n"
 "}")
         self.groupBox_6.setObjectName("groupBox_6")
         self.gridLayout_7 = QtWidgets.QGridLayout(self.groupBox_6)
-        self.gridLayout_7.setContentsMargins(20, 20, -1, -1)
+        self.gridLayout_7.setContentsMargins(20, 40, -1, -1)
         self.gridLayout_7.setObjectName("gridLayout_7")
         self.tabWidget_3 = QtWidgets.QTabWidget(self.groupBox_6)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -879,16 +723,14 @@ class Ui_MainWindow(object):
         self.tab_13.setObjectName("tab_13")
         self.tabWidget_3.addTab(self.tab_13, "")
         self.gridLayout_7.addWidget(self.tabWidget_3, 0, 0, 1, 1)
-        self.gridLayout_4.addWidget(self.groupBox_6, 4, 0, 1, 1)
-        self.gridLayout_2.addWidget(self.groupBox_2, 3, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.groupBox_6, 2, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.groupBox_2, 2, 0, 1, 1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
         self.kc_Internet_Date1_2.setCurrentIndex(0)
-        self.tabWidget.setCurrentIndex(0)
-        self.tabWidget_2.setCurrentIndex(0)
         self.tabWidget_3.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -907,24 +749,10 @@ class Ui_MainWindow(object):
         self.kc_Internet_Date1_2.setTabText(self.kc_Internet_Date1_2.indexOf(self.tab_16), _translate("MainWindow", "Digital Now"))
         self.kc_BW_title3.setText(_translate("MainWindow", "Loading..."))
         self.kc_Internet_Date1_2.setTabText(self.kc_Internet_Date1_2.indexOf(self.tab_17), _translate("MainWindow", "버즈워드 토픽"))
-        self.groupBox.setTitle(_translate("MainWindow", "IT 트렌드"))
-        self.groupBox_7.setTitle(_translate("MainWindow", "트렌드 버드"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Business"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tech"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Design"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Product"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("MainWindow", "Consumer"))
         self.groupBox_2.setTitle(_translate("MainWindow", "비즈니스 트렌드"))
         self.groupBox_3.setTitle(_translate("MainWindow", "데일리 트렌드"))
         self.dailyTrend_Title3.setText(_translate("MainWindow", "Loading..."))
         self.label_3.setText(_translate("MainWindow", "TextLabel"))
-        self.groupBox_5.setTitle(_translate("MainWindow", "리테일 매거진"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_6), _translate("MainWindow", "Coverstory"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_7), _translate("MainWindow", "Special Story"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_8), _translate("MainWindow", "Field Story"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_9), _translate("MainWindow", "Biz Insight"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_10), _translate("MainWindow", "Store"))
-        self.groupBox_4.setTitle(_translate("MainWindow", "퍼블리"))
         self.groupBox_6.setTitle(_translate("MainWindow", "닐슨"))
         self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_11), _translate("MainWindow", "Insight"))
         self.nielsen_Press_title3.setText(_translate("MainWindow", "Loading..."))

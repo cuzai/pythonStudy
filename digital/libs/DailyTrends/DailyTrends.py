@@ -48,10 +48,15 @@ class DailyTrends(QThread) :
                         logging.info("myError = {}".format(e))
                         continue
 
-
                 if (login_req.status_code == 200 and login_req.ok):
                     # go to retail & e-tail
-                    url = s.get(self.parseUrl)
+                    while(True) :
+                        try :
+                            url = s.get(self.parseUrl)
+                            break
+                        except Exception :
+                            logging.info(">>>>> DaliyTrends parseUrl error : {}".format(e))
+                            continue
                     soup = BeautifulSoup(url.content, 'html.parser')
                     # logging.info("got to the point")
 
