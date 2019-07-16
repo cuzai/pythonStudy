@@ -81,7 +81,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
             # Nielsen
             self.nielsen_Press = Nielsen_Press(self.howMany)
-            self.nielsen_Press.finished.connect(self.set_N_Press_Title)
+            self.nielsen_Press.finished.connect(self.setTitle)
             self.nielsen_Press.start()
             time.sleep(0.2)
 
@@ -129,6 +129,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             title_Li = [self.kc_BW_title1, self.kc_BW_title2, self.kc_BW_title3, self.kc_BW_title4, self.kc_BW_title5]
             date_Li = [self.kc_BuzzWord_Date1, self.kc_BuzzWord_Date2, self.kc_BuzzWord_Date3, self.kc_BuzzWord_Date4, self.kc_BuzzWord_Date5]
             idx = self.kc_buzz_idx
+        elif name == "nielsen_Press" :
+            title_Li = [self.nielsen_Press_title1, self.nielsen_Press_title2, self.nielsen_Press_title3, self.nielsen_Press_title4, self.nielsen_Press_title5]
+            date_Li = [self.Nielsen_Press_Date1, self.Nielsen_Press_Date2, self.Nielsen_Press_Date3, self.Nielsen_Press_Date4, self.Nielsen_Press_Date5]
+            idx = self.n_Press_idx
 
         title_Li[idx].setText(title)
         date_Li[idx].setText(date)
@@ -150,6 +154,8 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.kc_digital_idx += 1
         elif name == "koreanClick_Buzz" :
             self.kc_buzz_idx += 1
+        elif name == "nielsen_Press" :
+            self.n_Press_idx += 1
 
     def whenClicked(self, name, href, title, idx, title_Li, date_Li):
         try :
@@ -157,6 +163,8 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 clicked = DtClicked(href)
             elif name == "koreanClick_Internet" or name == "koreanClick_Topic" or name == "koreanClick_Digital" or name == "koreanClick_Buzz":
                 clicked = KcClicked(href)
+            elif name == "nielsen_Press" :
+                clicked = NClicked(href)
             clicked.start()
 
             # insert into the db only when there is no same thing
@@ -182,31 +190,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
         elif name == 'dailyTrend' :
             self.dailyTrend_Title3.setText("데일리트렌드 인터넷 연결이 지연되고 있습니다.")
 
-    # nielsen
-    @pyqtSlot(str, str, str)
-    def set_N_Press_Title(self, title, href, date):
-        logging.info("set_N_Press_Title")
-        try:
-            self.n_Press_TitleLi = [self.nielsen_Press_title1, self.nielsen_Press_title2, self.nielsen_Press_title3, self.nielsen_Press_title4, self.nielsen_Press_title5]
-            self.n_Press_DateLi = [self.Nielsen_Press_Date1, self.Nielsen_Press_Date2, self.Nielsen_Press_Date3, self.Nielsen_Press_Date4, self.Nielsen_Press_Date5]
-
-            self.n_Press_TitleLi[self.n_Press_idx].setText(title)
-            self.n_Press_DateLi[self.n_Press_idx].setText(date)
-
-            # if in db, make the title grey
-            if self.c.execute("SELECT title FROM nielsen_Press WHERE title = ?", (title,)).fetchone() :
-                self.n_Press_TitleLi[self.n_Press_idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
-                self.n_Press_DateLi[self.n_Press_idx].setStyleSheet('color:grey')
-
-            idx = self.n_Press_idx
-
-            self.n_Press_TitleLi[self.n_Press_idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-            self.n_Press_TitleLi[self.n_Press_idx].clicked.connect(lambda: self.nClicked(href, title, idx, 'nielsen_Press'))
-            self.n_Press_idx += 1
-
-        except Exception as e :
-            logging.info(">>>>> set_N_Press_Title error : {}".format(e))
-            pass
+        elif name == "nielsen_Press" :
+            self.nielsen_Press_title3.setText("닐슨코리아 인터넷 연결이 지연되고 있습니다.")
+        elif name == "nielsen_Insight" :
+            self.nielsen_Insight_title2.setText("닐슨코리아 인터넷 연결이 지연되고 있습니다.")
 
     def set_N_Insight_Title(self, title, href, date):
         logging.info("set_N_Insight_Title")
@@ -232,29 +219,6 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             logging.info(">>>>> set_N_Insight_Title error : {}".format(e))
             pass
 
-
-
-    def nClicked(self, href, title, idx, name):
-        try :
-            self.nced = NClicked(href)
-            self.nced.start()
-
-            # insert into the db only when there is no same thing
-            if self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone() is None:
-                self.c.execute("INSERT INTO " + name + " VALUES(?, ?)", (title, self.nowDateTime,))
-                self.conn.commit()
-
-                if name == 'nielsen_Press':
-                    self.n_Press_TitleLi[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
-                    self.n_Press_DateLi[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
-                elif name == 'nielsen_Insight' :
-                    self.n_Insight_TitleLi[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
-                    self.n_Insight_DateLi[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
-
-
-        except Exception as e:
-            logging.info(">>>>> nClicked error : {}".format(e))
-            pass
     def __del__(self):
         self.conn.close()
         self.dailyTrend.terminate()
