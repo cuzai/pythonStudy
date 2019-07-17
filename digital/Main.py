@@ -1,3 +1,4 @@
+
 print("프로그램을 여는 중입니다.")
 print("컴퓨터 사양에 따라 최대 10초까지 소요될 수 있습니다.")
 print("프로그램을 종료할 때까지 이 창을 끄지 마십시오")
@@ -18,6 +19,8 @@ from libs.KoreakClick.KoreanClick_Topic import KoreanClick_Topic
 from libs.Nielsen.Nielsen_Press import Nielsen_Press
 from libs.Nielsen.Nielsen_Insight import Nielsen_Insight
 from libs.Nielsen.NClicked import NClicked
+from libs.Nielsen.Nielsen_Top import Nielsen_Top
+
 
 from libs.DailyTrends.DailyTrends import DailyTrends
 from libs.DailyTrends.DtClicked import DtClicked
@@ -39,6 +42,9 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
     n_Press_idx = 0
     n_Insight_idx = 0
+    n_Tv_idx = 0
+    n_App_idx = 0
+    n_Web_idx = 0
 
     def __init__(self):
         try :
@@ -82,12 +88,19 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             # Nielsen
             self.nielsen_Press = Nielsen_Press(self.howMany)
             self.nielsen_Press.finished.connect(self.setTitle)
+            self.nielsen_Press.error.connect(self.myError)
             self.nielsen_Press.start()
             time.sleep(0.2)
 
             self.nielsen_Insight = Nielsen_Insight(self.howMany)
             self.nielsen_Insight.finished.connect(self.setTitle)
+            self.nielsen_Insight.error.connect(self.myError)
             self.nielsen_Insight.start()
+            time.sleep(0.2)
+
+            self.nielsen_Top = Nielsen_Top()
+            self.nielsen_Top.finished.connect(self.setTop)
+            self.nielsen_Top.start()
             time.sleep(0.2)
 
             # make db
@@ -144,6 +157,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
         # if in db, make the title grey
         if self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone() :
             title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+            date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
 
         title_Li[idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         title_Li[idx].clicked.connect(lambda : self.whenClicked(name, href, title, idx, title_Li, date_Li))
@@ -162,6 +176,44 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.n_Press_idx += 1
         elif name == "nielsen_Insight" :
             self.n_Insight_idx += 1
+
+    @pyqtSlot(str, str, str, str, str)
+    def setTop(self, name, date, title, broadcast, audience):
+        if name == "nielsen_Top_Tv" :
+            titleLi = [self.nielsen_TV_Programme1, self.nielsen_TV_Programme2, self.nielsen_TV_Programme3, self.nielsen_TV_Programme4, self.nielsen_TV_Programme5, self.nielsen_TV_Programme6, self.nielsen_TV_Programme7, self.nielsen_TV_Programme8, self.nielsen_TV_Programme9, self.nielsen_TV_Programme10]
+            broadcastLi = [self.nielsen_TV_Broadcast1, self.nielsen_TV_Broadcast2, self.nielsen_TV_Broadcast3, self.nielsen_TV_Broadcast4, self.nielsen_TV_Broadcast5, self.nielsen_TV_Broadcast6, self.nielsen_TV_Broadcast7, self.nielsen_TV_Broadcast8, self.nielsen_TV_Broadcast9, self.nielsen_TV_Broadcast10]
+            audienceLi = [self.nielsen_TV_Audience1, self.nielsen_TV_Audience2, self.nielsen_TV_Audience3, self.nielsen_TV_Audience4, self.nielsen_TV_Audience5, self.nielsen_TV_Audience6, self.nielsen_TV_Audience7, self.nielsen_TV_Audience8, self.nielsen_TV_Audience9, self.nielsen_TV_Audience10]
+            idx = self.n_Tv_idx
+            dateLi = self.nielsen_TV_Date
+        elif name == "nielsen_Top_App" :
+            titleLi = [self.nielsen_App_Name1, self.nielsen_App_Name2, self.nielsen_App_Name3, self.nielsen_App_Name4, self.nielsen_App_Name5, self.nielsen_App_Name6, self.nielsen_App_Name7, self.nielsen_App_Name8, self.nielsen_App_Name9, self.nielsen_App_Name10]
+            audienceLi = [self.nielsen_App_User1, self.nielsen_App_User2, self.nielsen_App_User3, self.nielsen_App_User4, self.nielsen_App_User5, self.nielsen_App_User6, self.nielsen_App_User7, self.nielsen_App_User8, self.nielsen_App_User9, self.nielsen_App_User10]
+            idx = self.n_App_idx
+            dateLi = self.nielsen_App_Date
+        elif name == 'nielsen_Top_Web' :
+            titleLi = [self.nielsen_Web_title1, self.nielsen_Web_title2, self.nielsen_Web_title3, self.nielsen_Web_title4, self.nielsen_Web_title5, self.nielsen_Web_title6, self.nielsen_Web_title7, self.nielsen_Web_title8, self.nielsen_Web_title9, self.nielsen_Web_title10]
+            broadcastLi = [self.nielsen_Web_Reach1, self.nielsen_Web_Reach2, self.nielsen_Web_Reach3, self.nielsen_Web_Reach4, self.nielsen_Web_Reach5, self.nielsen_Web_Reach6, self.nielsen_Web_Reach7, self.nielsen_Web_Reach8, self.nielsen_Web_Reach9, self.nielsen_Web_Reach10]
+            audienceLi = [self.nielsen_Web_User1, self.nielsen_Web_User2, self.nielsen_Web_User3, self.nielsen_Web_User4, self.nielsen_Web_User5, self.nielsen_Web_User6, self.nielsen_Web_User7, self.nielsen_Web_User8, self.nielsen_Web_User9, self.nielsen_Web_User10]
+            idx = self.n_Web_idx
+            dateLi = self.nielsen_Web_Date
+
+        dateLi.setText(date)
+
+        titleLi[idx].setText("   " + title)
+
+        try :
+            broadcastLi[idx].setText("   " + broadcast)
+        except Exception :
+            pass
+
+        audienceLi[idx].setText(audience)
+
+        if name == "nielsen_Top_Tv" :
+            self.n_Tv_idx += 1
+        elif name == "nielsen_Top_App" :
+            self.n_App_idx += 1
+        elif name == "nielsen_Top_Web" :
+            self.n_Web_idx += 1
 
     def whenClicked(self, name, href, title, idx, title_Li, date_Li):
         try :
@@ -185,45 +237,21 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
     @pyqtSlot(str)
     def myError(self, name):
         if name == "koreanClick_Internet" :
-            self.kc_Internet_Title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.")
+            self.kc_Internet_Title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
         elif name == "koreanClick_Topic" :
-            self.kc_Topic_Title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.")
+            self.kc_Topic_Title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
         elif name == "koreanClick_Digital" :
-            self.kc_DN_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.")
+            self.kc_DN_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
         elif name == 'koreanClick_Buzz' :
-            self.kc_BW_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.")
+            self.kc_BW_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
 
         elif name == 'dailyTrend' :
-            self.dailyTrend_Title3.setText("데일리트렌드 인터넷 연결이 지연되고 있습니다.")
+            self.dailyTrend_Title3.setText("데일리트렌드 인터넷 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
 
         elif name == "nielsen_Press" :
-            self.nielsen_Press_title3.setText("닐슨코리아 인터넷 연결이 지연되고 있습니다.")
+            self.nielsen_Press_title3.setText("닐슨코리아 인터넷 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
         elif name == "nielsen_Insight" :
-            self.nielsen_Insight_title2.setText("닐슨코리아 인터넷 연결이 지연되고 있습니다.")
-
-    def set_N_Insight_Title(self, title, href, date):
-        logging.info("set_N_Insight_Title")
-        try:
-            self.n_Insight_TitleLi = [self.nielsen_Insight_title1, self.nielsen_Insight_title2, self.nielsen_Insight_title3]
-            self.n_Insight_DateLi = [self.nielsen_Insight_Date1, self.nielsen_Insight_Date2, self.nielsen_Insight_Date3]
-
-            self.n_Insight_TitleLi[self.n_Insight_idx].setText(title)
-            self.n_Insight_DateLi[self.n_Insight_idx].setText(date)
-
-            # if in db, make the title grey
-            if self.c.execute("SELECT title FROM nielsen_Insight WHERE title = ?", (title,)).fetchone() :
-                self.n_Insight_TitleLi[self.n_Insight_idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
-                self.n_Insight_DateLi[self.n_Insight_idx].setStyleSheet('color:grey')
-
-            idx = self.n_Insight_idx
-
-            self.n_Insight_TitleLi[self.n_Insight_idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-            self.n_Insight_TitleLi[self.n_Insight_idx].clicked.connect(lambda: self.nClicked(href, title, idx, 'nielsen_Insight'))
-            self.n_Insight_idx += 1
-
-        except Exception as e :
-            logging.info(">>>>> set_N_Insight_Title error : {}".format(e))
-            pass
+            self.nielsen_Insight_title2.setText("닐슨코리아 인터넷 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
 
     def __del__(self):
         self.conn.close()

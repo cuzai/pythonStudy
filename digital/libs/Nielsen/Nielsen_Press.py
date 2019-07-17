@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 
 class Nielsen_Press(QThread) :
     finished = pyqtSignal(str, str, str, str)
+    error = pyqtSignal(str)
 
     def __init__(self, howMany):
         super().__init__()
@@ -18,6 +19,7 @@ class Nielsen_Press(QThread) :
                 url = requests.get(self.url, verify = False).content
                 break
             except Exception as e :
+                self.error.emit('nielsen_Press')
                 logging.info(">>>>> Nielsen Press request error : {}".format(e))
                 continue
         soup = BeautifulSoup(url, 'html.parser')
