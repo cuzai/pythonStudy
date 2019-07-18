@@ -1,6 +1,3 @@
-from libs.Publy.PClicked import PClicked
-from libs.Publy.Publy import Publy
-
 print("프로그램을 여는 중입니다.")
 print("컴퓨터 사양에 따라 최대 10초까지 소요될 수 있습니다.")
 print("프로그램을 종료할 때까지 이 창을 끄지 마십시오")
@@ -12,26 +9,26 @@ import time
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
 from PyQt5.QtCore import pyqtSlot
 
+from libs.KoreakClick.KoreanClick import KoreanClick
 from libs.KoreakClick.KcClicked import KcClicked
-from libs.KoreakClick.KoreanClick_BuzzWord import KoreanClick_BuzzWord
-from libs.KoreakClick.KoreanClick_DigitalNow import KoreanClick_DigitalNow
-from libs.KoreakClick.KoreanClick_Internet import KoreanClick_Internet
-from libs.KoreakClick.KoreanClick_Topic import KoreanClick_Topic
 
 from libs.Nielsen.Nielsen_Press import Nielsen_Press
 from libs.Nielsen.Nielsen_Insight import Nielsen_Insight
 from libs.Nielsen.NClicked import NClicked
 from libs.Nielsen.Nielsen_Top import Nielsen_Top
 
-
 from libs.DailyTrends.DailyTrends import DailyTrends
 from libs.DailyTrends.DtClicked import DtClicked
+
+from libs.Publy.PClicked import PClicked
+from libs.Publy.Publy import Publy
 
 from ui.myUi import Ui_MainWindow
 import sys
 import logging
 
 form_class = uic.loadUiType('./ui/main.ui')[0]
+
 class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
     howMany = 5
 
@@ -65,25 +62,29 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             time.sleep(0.2)
 
             # Korean Click
-            self.kc_Internet = KoreanClick_Internet(self.howMany)
+            # self.kc_Internet = KoreanClick_Internet(self.howMany)
+            self.kc_Internet = KoreanClick("koreanClick_Internet", self.howMany)
             self.kc_Internet.finished.connect(self.setTitle)
             self.kc_Internet.error.connect(self.myError)
             self.kc_Internet.start()
             time.sleep(0.2)
 
-            self.kc_Topic = KoreanClick_Topic(self.howMany)
+            # self.kc_Topic = KoreanClick_Topic(self.howMany)
+            self.kc_Topic = KoreanClick("koreanClick_Topic", self.howMany)
             self.kc_Topic.finished.connect(self.setTitle)
             self.kc_Topic.error.connect(self.myError)
             self.kc_Topic.start()
             time.sleep(0.2)
 
-            self.kc_Digital = KoreanClick_DigitalNow(self.howMany)
+            # self.kc_Digital = KoreanClick_DigitalNow(self.howMany)
+            self.kc_Digital = KoreanClick("koreanClick_Digital", self.howMany)
             self.kc_Digital.finished.connect(self.setTitle)
             self.kc_Digital.error.connect(self.myError)
             self.kc_Digital.start()
             time.sleep(0.2)
 
-            self.kc_Buzz = KoreanClick_BuzzWord(self.howMany)
+            # self.kc_Buzz = KoreanClick_BuzzWord(self.howMany)
+            self.kc_Buzz = KoreanClick("koreanClick_Buzz", self.howMany)
             self.kc_Buzz.finished.connect(self.setTitle)
             self.kc_Buzz.error.connect(self.myError)
             self.kc_Buzz.start()
@@ -166,11 +167,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             date_Li = [self.pybly_Date1, self.pybly_Date2, self.pybly_Date3, self.pybly_Date4, self.pybly_Date5]
             idx = self.publy_idx
 
-
         title_Li[idx].setText(title)
         date_Li[idx].setText(date)
 
-        # if in db, make the title grey
+        # if in db, make the title and date grey
         if self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone() :
             title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
             date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
@@ -197,17 +197,20 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
     @pyqtSlot(str, str, str, str, str)
     def setTop(self, name, date, title, broadcast, audience):
+        # date, programme, broadcast, audience
         if name == "nielsen_Top_Tv" :
             titleLi = [self.nielsen_TV_Programme1, self.nielsen_TV_Programme2, self.nielsen_TV_Programme3, self.nielsen_TV_Programme4, self.nielsen_TV_Programme5, self.nielsen_TV_Programme6, self.nielsen_TV_Programme7, self.nielsen_TV_Programme8, self.nielsen_TV_Programme9, self.nielsen_TV_Programme10]
             broadcastLi = [self.nielsen_TV_Broadcast1, self.nielsen_TV_Broadcast2, self.nielsen_TV_Broadcast3, self.nielsen_TV_Broadcast4, self.nielsen_TV_Broadcast5, self.nielsen_TV_Broadcast6, self.nielsen_TV_Broadcast7, self.nielsen_TV_Broadcast8, self.nielsen_TV_Broadcast9, self.nielsen_TV_Broadcast10]
             audienceLi = [self.nielsen_TV_Audience1, self.nielsen_TV_Audience2, self.nielsen_TV_Audience3, self.nielsen_TV_Audience4, self.nielsen_TV_Audience5, self.nielsen_TV_Audience6, self.nielsen_TV_Audience7, self.nielsen_TV_Audience8, self.nielsen_TV_Audience9, self.nielsen_TV_Audience10]
             idx = self.n_Tv_idx
             dateLi = self.nielsen_TV_Date
+        # date, appName, None, Users
         elif name == "nielsen_Top_App" :
             titleLi = [self.nielsen_App_Name1, self.nielsen_App_Name2, self.nielsen_App_Name3, self.nielsen_App_Name4, self.nielsen_App_Name5, self.nielsen_App_Name6, self.nielsen_App_Name7, self.nielsen_App_Name8, self.nielsen_App_Name9, self.nielsen_App_Name10]
             audienceLi = [self.nielsen_App_User1, self.nielsen_App_User2, self.nielsen_App_User3, self.nielsen_App_User4, self.nielsen_App_User5, self.nielsen_App_User6, self.nielsen_App_User7, self.nielsen_App_User8, self.nielsen_App_User9, self.nielsen_App_User10]
             idx = self.n_App_idx
             dateLi = self.nielsen_App_Date
+        # date, webTitle, webReach, webUser
         elif name == 'nielsen_Top_Web' :
             titleLi = [self.nielsen_Web_title1, self.nielsen_Web_title2, self.nielsen_Web_title3, self.nielsen_Web_title4, self.nielsen_Web_title5, self.nielsen_Web_title6, self.nielsen_Web_title7, self.nielsen_Web_title8, self.nielsen_Web_title9, self.nielsen_Web_title10]
             broadcastLi = [self.nielsen_Web_Reach1, self.nielsen_Web_Reach2, self.nielsen_Web_Reach3, self.nielsen_Web_Reach4, self.nielsen_Web_Reach5, self.nielsen_Web_Reach6, self.nielsen_Web_Reach7, self.nielsen_Web_Reach8, self.nielsen_Web_Reach9, self.nielsen_Web_Reach10]
@@ -215,16 +218,14 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             idx = self.n_Web_idx
             dateLi = self.nielsen_Web_Date
 
-        dateLi.setText(date)
-
         titleLi[idx].setText("   " + title)
-
+        dateLi.setText(date)
+        audienceLi[idx].setText(audience)
         try :
             broadcastLi[idx].setText("   " + broadcast)
         except Exception :
+            # exception for neilsen top app
             pass
-
-        audienceLi[idx].setText(audience)
 
         if name == "nielsen_Top_Tv" :
             self.n_Tv_idx += 1
@@ -243,10 +244,9 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 clicked = NClicked(href)
             elif name == 'publy' :
                 clicked = PClicked(href)
-
             clicked.start()
 
-            # insert into the db only when there is no same thing
+            # insert into the db ONLY WHEN there is no same thing and make it grey
             if self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone() is None :
                 self.c.execute("INSERT INTO " + name + " VALUES(?, ?)", (title, self.nowDateTime,))
                 self.conn.commit()
@@ -265,10 +265,8 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.kc_DN_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
         elif name == 'koreanClick_Buzz' :
             self.kc_BW_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
-
         elif name == 'dailyTrend' :
             self.dailyTrend_Title3.setText("데일리트렌드 인터넷 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
-
         elif name == "nielsen_Press" :
             self.nielsen_Press_title3.setText("닐슨코리아 인터넷 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
         elif name == "nielsen_Insight" :

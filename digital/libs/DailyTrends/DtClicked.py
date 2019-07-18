@@ -7,14 +7,13 @@ logging.basicConfig(level=logging.INFO)
 class DtClicked(QThread):
     def __init__(self, link):
         super().__init__()
-        self.link = link
+        self.url = 'https://www.dailytrend.co.kr/login/?redirect_to=' + link
 
     def run(self):
         try :
             self.driver = webdriver.Chrome(
                 "./webdriver/chrome/chromedriver")
-            url = 'https://www.dailytrend.co.kr/login/?redirect_to=' + self.link
-            self.driver.get(url)
+            self.driver.get(self.url)
             self.driver.implicitly_wait(10)
             self.driver.find_elements_by_css_selector('.userpro-input')[0].find_element_by_css_selector('input').send_keys('retailrnd5')
             self.driver.find_elements_by_css_selector('.userpro-input')[1].find_element_by_css_selector('input').send_keys('fhtepqorghkwja5')

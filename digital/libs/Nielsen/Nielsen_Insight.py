@@ -24,12 +24,14 @@ class Nielsen_Insight(QThread) :
                 continue
         soup = BeautifulSoup(url, 'html.parser')
         temp = soup.select('.featured-posts.module.module-slim > article')
+
         for n, i in enumerate(temp) :
             title = i.select_one('h2').text
 
             link = i.select_one('h2 a')['href']
             time = i.select_one('.updated.knockout.h5').text
             self.finished.emit("nielsen_Insight", title, link, time)
+
             if n == self.howMany-1 :
                 break
 
