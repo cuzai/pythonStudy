@@ -1,3 +1,5 @@
+from libs.Publy.PClicked import PClicked
+from libs.Publy.Publy import Publy
 
 print("프로그램을 여는 중입니다.")
 print("컴퓨터 사양에 따라 최대 10초까지 소요될 수 있습니다.")
@@ -45,6 +47,8 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
     n_Tv_idx = 0
     n_App_idx = 0
     n_Web_idx = 0
+
+    publy_idx = 0
 
     def __init__(self):
         try :
@@ -103,6 +107,12 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.nielsen_Top.start()
             time.sleep(0.2)
 
+            # publy
+            self.publy = Publy(self.howMany)
+            self.publy.finished.connect(self.setTitle)
+            self.publy.start()
+            time.sleep(0.2)
+
             # make db
             self.conn = sqlite3.connect('db/userData.db')
             now = datetime.datetime.now()
@@ -115,6 +125,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Buzz(title text, regdate text)")
             self.c.execute("CREATE TABLE IF NOT EXISTS nielsen_Press(title text, regdate text)")
             self.c.execute("CREATE TABLE IF NOT EXISTS nielsen_Insight(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS publy(title text, regdate text)")
 
         except Exception as e :
             logging.info(">>>>> __init__ error : {}".format(e))
@@ -150,6 +161,11 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             title_Li = [self.nielsen_Insight_title1, self.nielsen_Insight_title2, self.nielsen_Insight_title3]
             date_Li = [self.nielsen_Insight_Date1, self.nielsen_Insight_Date2, self.nielsen_Insight_Date3]
             idx = self.n_Insight_idx
+        elif name == 'publy' :
+            title_Li = [self.publy_Title1, self.publy_Title2, self.publy_Title3, self.publy_Title4, self.publy_Title5]
+            date_Li = [self.pybly_Date1, self.pybly_Date2, self.pybly_Date3, self.pybly_Date4, self.pybly_Date5]
+            idx = self.publy_idx
+
 
         title_Li[idx].setText(title)
         date_Li[idx].setText(date)
@@ -176,6 +192,8 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.n_Press_idx += 1
         elif name == "nielsen_Insight" :
             self.n_Insight_idx += 1
+        elif name == "publy" :
+            self.publy_idx += 1
 
     @pyqtSlot(str, str, str, str, str)
     def setTop(self, name, date, title, broadcast, audience):
@@ -223,6 +241,9 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 clicked = KcClicked(href)
             elif name == "nielsen_Press" or name == "nielsen_Insight" :
                 clicked = NClicked(href)
+            elif name == 'publy' :
+                clicked = PClicked(href)
+
             clicked.start()
 
             # insert into the db only when there is no same thing

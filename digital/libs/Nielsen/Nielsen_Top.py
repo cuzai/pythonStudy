@@ -1,12 +1,10 @@
 import time
 
-import requests
 from PyQt5.QtCore import QThread, pyqtSignal
 import logging
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-from bs4 import BeautifulSoup
 
 
 class Nielsen_Top(QThread) :
