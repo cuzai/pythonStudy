@@ -201,25 +201,9 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             now = datetime.datetime.now()
             self.nowDateTime = now.strftime('%Y-%m-%d %H:%M:%S')
             self.c = self.conn.cursor()
-            self.c.execute("CREATE TABLE IF NOT EXISTS dailyTrends(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Internet(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Topic(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Digital(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS koreanClick_Buzz(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS nielsen_Press(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS nielsen_Insight(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS publy(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS tb_Biz(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS tb_Tech(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS tb_Design(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS tb_Product(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS tb_Consumer(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Coopang(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Ebay(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Tmon(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Wemap(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS bell_11st(title text, regdate text)")
-            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Market(title text, regdate text)")
+            self.dbLi = ['dailyTrends', 'koreanClick_Internet', 'koreanClick_Topic', 'koreanClick_Digital', 'koreanClick_Buzz', 'nielsen_Press', 'nielsen_Insight', 'publy', 'tb_Biz', 'tb_Tech', 'tb_Design', 'tb_Product', 'tb_Consumer', 'bell_Coopang', 'bell_Ebay', 'bell_Tmon', 'bell_Wemap', 'bell_11st', 'bell_Market']
+            for i in self.dbLi :
+                self.c.execute("CREATE TABLE IF NOT EXISTS "+ i + "(title text, regdate text)")
 
         except Exception as e :
             logging.info(">>>>> __init__ error : {}".format(e))
@@ -308,7 +292,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
         date_Li[idx].setText(date)
 
         # if in db, make the title and date grey
-        if self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone() :
+        if self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone():
             title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
             date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
 
@@ -353,7 +337,6 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.bell_11st_idx += 1
         elif name == 'bell_Market' :
             self.bell_Market_idx += 1
-
 
     @pyqtSlot(str, str, str, str, str)
     def setTop(self, name, date, title, broadcast, audience):
@@ -409,6 +392,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             elif name == 'bell_Coopang' or name == 'bell_Ebay' or name == 'bell_Tmon' or name == 'bell_Wemap' or name == 'bell_11st' or name == 'bell_Market' :
                 clicked = BellClicked(href)
             clicked.start()
+            time.sleep(0.1)
 
             # insert into the db ONLY WHEN there is no same thing and make it grey
             if self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone() is None :
@@ -416,6 +400,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 self.conn.commit()
                 title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
                 date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+
         except Exception as e:
             logging.info(">>>>> whenClicked error : {}".format(e))
             pass
@@ -444,9 +429,11 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
         for i in titleLi :
             i.setText("")
+            i.setStyleSheet('color:black; text-align:left; background:transparent;')
 
         for i in dateLi:
             i.setText("")
+            i.setStyleSheet('color:black; text-align:left; background:transparent;')
 
         if myInput == "쿠팡" or myInput == "이베이" or myInput == "티몬" or myInput == "위메프" or myInput == "11번가" or myInput == "마켓컬리" or myInput == "무신사" or myInput == "신세계" :
             self.bell_Search_Title3.setText(myInput + "은(는) 이미 존재하는 탭입니다.")
@@ -459,39 +446,51 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
     @pyqtSlot(str, str, str, str)
     def setSearchTitle(self, name, title, href, date):
-        title_Li = [self.bell_Search_Title1, self.bell_Search_Title2, self.bell_Search_Title3, self.bell_Search_Title4, self.bell_Search_Title5]
-        date_Li = [self.bell_Search_Date1, self.bell_Search_Date2, self.bell_Search_Date3, self.bell_Search_Date4, self.bell_Search_Date5]
-        idx = self.bell_Search_idx
+        try :
+            title_Li = [self.bell_Search_Title1, self.bell_Search_Title2, self.bell_Search_Title3, self.bell_Search_Title4, self.bell_Search_Title5]
+            date_Li = [self.bell_Search_Date1, self.bell_Search_Date2, self.bell_Search_Date3, self.bell_Search_Date4, self.bell_Search_Date5]
+            idx = self.bell_Search_idx
 
-        title_Li[idx].setText(title)
-        date_Li[idx].setText(date)
-
-        # if in db, make the title and date grey
-        if self.c.execute("SELECT title FROM bell_Search WHERE title = ?", (title,)).fetchone() :
-            title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
-            date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
-        else :
             title_Li[idx].setStyleSheet('color:black; text-align:left; background:transparent;')
             date_Li[idx].setStyleSheet('color:black; text-align:left; background:transparent;')
 
+            if title == "검색결과가 없습니다." :
+                title_Li[2].setText(title)
+            else :
+                title_Li[idx].setText(title)
+                date_Li[idx].setText(date)
 
-        title_Li[idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        title_Li[idx].clicked.connect(lambda : self.whenSearchClicked(name, href, title, idx, title_Li, date_Li))
+                # if in db, make the title and date grey
+                if self.c.execute("SELECT title FROM bell_Search WHERE title = ?", (title,)).fetchone() :
+                    title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                    date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
 
-        self.bell_Search_idx += 1
-        if self.bell_Search_idx == self.howMany :
-            self.bell_Search_idx = 0
+                title_Li[idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+                title_Li[idx].clicked.connect(lambda : self.whenSearchClicked(name, href, title, idx, title_Li, date_Li))
+
+                self.bell_Search_idx += 1
+                if self.bell_Search_idx == self.howMany :
+                    self.bell_Search_idx = 0
+        except Exception as e :
+            logging.info(">>>>> setSearchTitle error : {}".format(e))
+            pass
 
     def whenSearchClicked(self, name, href, title, idx, title_Li, date_Li):
-        clicked = BellClicked(href)
-        clicked.start()
+        try :
+            clicked = BellClicked(href)
+            clicked.start()
+            time.sleep(0.1)
 
-        # insert into the db ONLY WHEN there is no same thing and make it grey
-        if self.c.execute("SELECT title FROM bell_Search WHERE title = ?", (title,)).fetchone() is None:
-            self.c.execute("INSERT INTO bell_Search VALUES(?, ?)", (title, self.nowDateTime,))
-            self.conn.commit()
-            title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
-            date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+            # insert into the db ONLY WHEN there is no same thing and make it grey
+            if self.c.execute("SELECT title FROM bell_Search WHERE title = ?", (title,)).fetchone() is None:
+                    self.c.execute("INSERT INTO bell_Search VALUES(?, ?)", (title, self.nowDateTime,))
+                    self.conn.commit()
+                    title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+                    date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+
+        except Exception as e :
+            logging.info(">>>>> whenSearchClicked error : {}".format(e))
+            pass
 
     def __del__(self):
         self.conn.close()
