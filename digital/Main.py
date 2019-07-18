@@ -23,6 +23,12 @@ from libs.DailyTrends.DtClicked import DtClicked
 from libs.Publy.PClicked import PClicked
 from libs.Publy.Publy import Publy
 
+from libs.TrendBird.TrendBird import TrendBird
+from libs.TrendBird.TbClicked import TbClicked
+
+from libs.TheBell.TheBell import TheBell
+from libs.TheBell.BellClicked import BellClicked
+
 from ui.myUi import Ui_MainWindow
 import sys
 import logging
@@ -47,6 +53,23 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
     publy_idx = 0
 
+    tb_Biz_idx = 0
+    tb_Tech_idx = 0
+    tb_Design_idx = 0
+    tb_Product_idx = 0
+    tb_Consumer_idx = 0
+
+    bell_Coopang_idx = 0
+    bell_Ebay_idx = 0
+    bell_Tmon_idx = 0
+    bell_Wemap_idx = 0
+    bell_11st_idx = 0
+    bell_Market_idx = 0
+    bell_Mushin_idx = 0
+    bell_Ssg_idx = 0
+    bell_Search_idx = 0
+
+
     def __init__(self):
         try :
             super().__init__()
@@ -59,7 +82,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.dailyTrend.error.connect(self.myError)
             self.dailyTrend.finished.connect(self.setTitle)
             self.dailyTrend.start()
-            time.sleep(0.2)
+            time.sleep(0.1)
 
             # Korean Click
             # self.kc_Internet = KoreanClick_Internet(self.howMany)
@@ -67,52 +90,111 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.kc_Internet.finished.connect(self.setTitle)
             self.kc_Internet.error.connect(self.myError)
             self.kc_Internet.start()
-            time.sleep(0.2)
+            time.sleep(0.1)
 
             # self.kc_Topic = KoreanClick_Topic(self.howMany)
             self.kc_Topic = KoreanClick("koreanClick_Topic", self.howMany)
             self.kc_Topic.finished.connect(self.setTitle)
             self.kc_Topic.error.connect(self.myError)
             self.kc_Topic.start()
-            time.sleep(0.2)
+            time.sleep(0.1)
 
             # self.kc_Digital = KoreanClick_DigitalNow(self.howMany)
             self.kc_Digital = KoreanClick("koreanClick_Digital", self.howMany)
             self.kc_Digital.finished.connect(self.setTitle)
             self.kc_Digital.error.connect(self.myError)
             self.kc_Digital.start()
-            time.sleep(0.2)
+            time.sleep(0.1)
 
             # self.kc_Buzz = KoreanClick_BuzzWord(self.howMany)
             self.kc_Buzz = KoreanClick("koreanClick_Buzz", self.howMany)
             self.kc_Buzz.finished.connect(self.setTitle)
             self.kc_Buzz.error.connect(self.myError)
             self.kc_Buzz.start()
-            time.sleep(0.2)
+            time.sleep(0.1)
 
             # Nielsen
             self.nielsen_Press = Nielsen_Press(self.howMany)
             self.nielsen_Press.finished.connect(self.setTitle)
             self.nielsen_Press.error.connect(self.myError)
             self.nielsen_Press.start()
-            time.sleep(0.2)
+            time.sleep(0.1)
 
             self.nielsen_Insight = Nielsen_Insight(self.howMany)
             self.nielsen_Insight.finished.connect(self.setTitle)
             self.nielsen_Insight.error.connect(self.myError)
             self.nielsen_Insight.start()
-            time.sleep(0.2)
+            time.sleep(0.1)
 
             self.nielsen_Top = Nielsen_Top()
             self.nielsen_Top.finished.connect(self.setTop)
             self.nielsen_Top.start()
-            time.sleep(0.2)
+            time.sleep(0.1)
 
             # publy
             self.publy = Publy(self.howMany)
             self.publy.finished.connect(self.setTitle)
             self.publy.start()
             time.sleep(0.2)
+
+            # trendBird
+            self.tb_Biz = TrendBird("tb_Biz", self.howMany)
+            self.tb_Biz.finished.connect(self.setTitle)
+            self.tb_Biz.start()
+            time.sleep(0.1)
+
+            self.tb_Tech = TrendBird("tb_Tech", self.howMany)
+            self.tb_Tech.finished.connect(self.setTitle)
+            self.tb_Tech.start()
+            time.sleep(0.1)
+
+            self.tb_Design = TrendBird("tb_Design", self.howMany)
+            self.tb_Design.finished.connect(self.setTitle)
+            self.tb_Design.start()
+            time.sleep(0.1)
+
+            self.tb_Product = TrendBird("tb_Product", self.howMany)
+            self.tb_Product.finished.connect(self.setTitle)
+            self.tb_Product.start()
+            time.sleep(0.1)
+
+            self.tb_Consumer = TrendBird("tb_Consumer", self.howMany)
+            self.tb_Consumer.finished.connect(self.setTitle)
+            self.tb_Consumer.start()
+            time.sleep(0.1)
+
+            # the bell
+            self.bell_Coopang = TheBell("bell_Coopang", self.howMany)
+            self.bell_Coopang.finished.connect(self.setTitle)
+            self.bell_Coopang.start()
+            time.sleep(0.1)
+
+            self.bell_Ebay = TheBell("bell_Ebay", self.howMany)
+            self.bell_Ebay.finished.connect(self.setTitle)
+            self.bell_Ebay.start()
+            time.sleep(0.1)
+
+            self.bell_Tmon = TheBell("bell_Tmon", self.howMany)
+            self.bell_Tmon.finished.connect(self.setTitle)
+            self.bell_Tmon.start()
+            time.sleep(0.1)
+
+            self.bell_Wemap = TheBell("bell_Wemap", self.howMany)
+            self.bell_Wemap.finished.connect(self.setTitle)
+            self.bell_Wemap.start()
+            time.sleep(0.1)
+
+            self.bell_11st = TheBell("bell_11st", self.howMany)
+            self.bell_11st.finished.connect(self.setTitle)
+            self.bell_11st.start()
+            time.sleep(0.1)
+
+            self.bell_Market = TheBell("bell_Market", self.howMany)
+            self.bell_Market.finished.connect(self.setTitle)
+            self.bell_Market.start()
+            time.sleep(0.1)
+
+            self.lineEdit.returnPressed.connect(self.searchBell)
 
             # make db
             self.conn = sqlite3.connect('db/userData.db')
@@ -127,6 +209,17 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.c.execute("CREATE TABLE IF NOT EXISTS nielsen_Press(title text, regdate text)")
             self.c.execute("CREATE TABLE IF NOT EXISTS nielsen_Insight(title text, regdate text)")
             self.c.execute("CREATE TABLE IF NOT EXISTS publy(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS tb_Biz(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS tb_Tech(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS tb_Design(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS tb_Product(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS tb_Consumer(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Coopang(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Ebay(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Tmon(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Wemap(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS bell_11st(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Market(title text, regdate text)")
 
         except Exception as e :
             logging.info(">>>>> __init__ error : {}".format(e))
@@ -166,6 +259,50 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             title_Li = [self.publy_Title1, self.publy_Title2, self.publy_Title3, self.publy_Title4, self.publy_Title5]
             date_Li = [self.pybly_Date1, self.pybly_Date2, self.pybly_Date3, self.pybly_Date4, self.pybly_Date5]
             idx = self.publy_idx
+        elif name == 'tb_Biz' :
+            title_Li = [self.trendBird_Biz_Title1, self.trendBird_Biz_Title2, self.trendBird_Biz_Title3, self.trendBird_Biz_Title4, self.trendBird_Biz_Title5]
+            date_Li = [self.trendBird_Biz_Date1, self.trendBird_Biz_Date2, self.trendBird_Biz_Date3, self.trendBird_Biz_Date4, self.trendBird_Biz_Date5]
+            idx = self.tb_Biz_idx
+        elif name == 'tb_Tech' :
+            title_Li = [self.trendBird_Tech_Title1, self.trendBird_Tech_Title2, self.trendBird_Tech_Title3, self.trendBird_Tech_Title4, self.trendBird_Tech_Title5]
+            date_Li = [self.trendBird_Tech_Date1, self.trendBird_Tech_Date2, self.trendBird_Tech_Date3, self.trendBird_Tech_Date4, self.trendBird_Tech_Date5]
+            idx = self.tb_Tech_idx
+        elif name == 'tb_Design' :
+            title_Li = [self.trendBird_Design_Title1, self.trendBird_Design_Title2, self.trendBird_Design_Title3, self.trendBird_Design_Title4, self.trendBird_Design_Title5]
+            date_Li = [self.trendBird_Design_Date1, self.trendBird_Design_Date2, self.trendBird_Design_Date3, self.trendBird_Design_Date4, self.trendBird_Design_Date5]
+            idx = self.tb_Design_idx
+        elif name == 'tb_Product' :
+            title_Li = [self.trendBird_Product_Title1, self.trendBird_Product_Title2, self.trendBird_Product_Title3, self.trendBird_Product_Title4, self.trendBird_Product_Title5]
+            date_Li = [self.trendBird_Product_Date1, self.trendBird_Product_Date2, self.trendBird_Product_Date3, self.trendBird_Product_Date4, self.trendBird_Product_Date5]
+            idx = self.tb_Product_idx
+        elif name == 'tb_Consumer' :
+            title_Li = [self.trendBird_Consumer_Title1, self.trendBird_Consumer_Title2, self.trendBird_Consumer_Title3, self.trendBird_Consumer_Title4, self.trendBird_Consumer_Title5]
+            date_Li = [self.trendBird_Consumer_Date1, self.trendBird_Consumer_Date2, self.trendBird_Consumer_Date3, self.trendBird_Consumer_Date4, self.trendBird_Consumer_Date5]
+            idx = self.tb_Consumer_idx
+        elif name == 'bell_Coopang' :
+            title_Li =[self.bell_Coopang_Title1, self.bell_Coopang_Title2, self.bell_Coopang_Title3, self.bell_Coopang_Title4, self.bell_Coopang_Title5]
+            date_Li = [self.bell_Coopang_Date1, self.bell_Coopang_Date2, self.bell_Coopang_Date3, self.bell_Coopang_Date4, self.bell_Coopang_Date5]
+            idx = self.bell_Coopang_idx
+        elif name == 'bell_Ebay' :
+            title_Li = [self.bell_Ebay_Title1, self.bell_Ebay_Title2, self.bell_Ebay_Title3, self.bell_Ebay_Title4, self.bell_Ebay_Title5]
+            date_Li = [self.bell_Ebay_Date1, self.bell_Ebay_Date2, self.bell_Ebay_Date3, self.bell_Ebay_Date4, self.bell_Ebay_Date5]
+            idx = self.bell_Ebay_idx
+        elif name == 'bell_Tmon' :
+            title_Li = [self.bell_Tmon_Title1, self.bell_Tmon_Title2, self.bell_Tmon_Title3, self.bell_Tmon_Title4, self.bell_Tmon_Title5]
+            date_Li = [self.bell_Tmon_Date1, self.bell_Tmon_Date2, self.bell_Tmon_Date3, self.bell_Tmon_Date4, self.bell_Tmon_Date5]
+            idx = self.bell_Tmon_idx
+        elif name == 'bell_Wemap' :
+            title_Li = [self.bell_Wemap_Title1, self.bell_Wemap_Title2, self.bell_Wemap_Title3, self.bell_Wemap_Title4, self.bell_Wemap_Title5]
+            date_Li = [self.bell_Wemap_Date1, self.bell_Wemap_Date2, self.bell_Wemap_Date3, self.bell_Wemap_Date4, self.bell_Wemap_Date5]
+            idx = self.bell_Wemap_idx
+        elif name == 'bell_11st' :
+            title_Li = [self.bell_11st_Title1, self.bell_11st_Title2, self.bell_11st_Title3, self.bell_11st_Title4, self.bell_11st_Title5]
+            date_Li = [self.bell_11st_Date1, self.bell_11st_Date2, self.bell_11st_Date3, self.bell_11st_Date4, self.bell_11st_Date5]
+            idx = self.bell_11st_idx
+        elif name == 'bell_Market' :
+            title_Li = [self.bell_Market_Title1, self.bell_Market_Title2, self.bell_Market_Title3, self.bell_Market_Title4, self.bell_Market_Title5]
+            date_Li = [self.bell_Market_Date1, self.bell_Market_Date2, self.bell_Market_Date3, self.bell_Market_Date4, self.bell_Market_Date5]
+            idx = self.bell_Market_idx
 
         title_Li[idx].setText(title)
         date_Li[idx].setText(date)
@@ -194,6 +331,29 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.n_Insight_idx += 1
         elif name == "publy" :
             self.publy_idx += 1
+        elif name == "tb_Biz" :
+            self.tb_Biz_idx += 1
+        elif name == 'tb_Tech' :
+            self.tb_Tech_idx += 1
+        elif name == 'tb_Design' :
+            self.tb_Design_idx += 1
+        elif name == 'tb_Product' :
+            self.tb_Product_idx += 1
+        elif name == 'tb_Consumer' :
+            self.tb_Consumer_idx += 1
+        elif name == 'bell_Coopang' :
+            self.bell_Coopang_idx += 1
+        elif name == 'bell_Ebay' :
+            self.bell_Ebay_idx += 1
+        elif name == 'bell_Tmon' :
+            self.bell_Tmon_idx += 1
+        elif name == 'bell_Wemap' :
+            self.bell_Wemap_idx += 1
+        elif name == 'bell_11st' :
+            self.bell_11st_idx += 1
+        elif name == 'bell_Market' :
+            self.bell_Market_idx += 1
+
 
     @pyqtSlot(str, str, str, str, str)
     def setTop(self, name, date, title, broadcast, audience):
@@ -244,6 +404,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 clicked = NClicked(href)
             elif name == 'publy' :
                 clicked = PClicked(href)
+            elif name == 'tb_Biz' or name == 'tb_Tech' or name == 'tb_Design' or name == 'tb_Product' or name == 'tb_Consumer':
+                clicked = TbClicked(href)
+            elif name == 'bell_Coopang' or name == 'bell_Ebay' or name == 'bell_Tmon' or name == 'bell_Wemap' or name == 'bell_11st' or name == 'bell_Market' :
+                clicked = BellClicked(href)
             clicked.start()
 
             # insert into the db ONLY WHEN there is no same thing and make it grey
@@ -254,23 +418,80 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
         except Exception as e:
             logging.info(">>>>> whenClicked error : {}".format(e))
+            pass
 
     @pyqtSlot(str)
     def myError(self, name):
         if name == "koreanClick_Internet" :
-            self.kc_Internet_Title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
+            self.kc_Internet_Title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다. 잠시만 기다려주십시오.")
         elif name == "koreanClick_Topic" :
-            self.kc_Topic_Title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
+            self.kc_Topic_Title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다. 잠시만 기다려주십시오.")
         elif name == "koreanClick_Digital" :
-            self.kc_DN_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
+            self.kc_DN_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다. 잠시만 기다려주십시오.")
         elif name == 'koreanClick_Buzz' :
-            self.kc_BW_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
+            self.kc_BW_title3.setText("코리안클릭 웹사이트의 연결이 지연되고 있습니다. 잠시만 기다려주십시오.")
         elif name == 'dailyTrend' :
-            self.dailyTrend_Title3.setText("데일리트렌드 인터넷 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
+            self.dailyTrend_Title3.setText("데일리트렌드 인터넷 연결이 지연되고 있습니다. 잠시만 기다려주십시오.")
         elif name == "nielsen_Press" :
-            self.nielsen_Press_title3.setText("닐슨코리아 인터넷 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
+            self.nielsen_Press_title3.setText("닐슨코리아 인터넷 연결이 지연되고 있습니다. 잠시만 기다려주십시오.")
         elif name == "nielsen_Insight" :
-            self.nielsen_Insight_title2.setText("닐슨코리아 인터넷 연결이 지연되고 있습니다.\n 잠시만 기다려주십시오.")
+            self.nielsen_Insight_title2.setText("닐슨코리아 인터넷 연결이 지연되고 있습니다. 잠시만 기다려주십시오.")
+
+    def searchBell(self):
+        myInput = self.lineEdit.text()
+        titleLi = [self.bell_Search_Title1, self.bell_Search_Title2, self.bell_Search_Title3, self.bell_Search_Title4, self.bell_Search_Title5]
+        dateLi = [self.bell_Search_Date1, self.bell_Search_Date2, self.bell_Search_Date3, self.bell_Search_Date4, self.bell_Search_Date5]
+
+        for i in titleLi :
+            i.setText("")
+
+        for i in dateLi:
+            i.setText("")
+
+        if myInput == "쿠팡" or myInput == "이베이" or myInput == "티몬" or myInput == "위메프" or myInput == "11번가" or myInput == "마켓컬리" or myInput == "무신사" or myInput == "신세계" :
+            self.bell_Search_Title3.setText(myInput + "은(는) 이미 존재하는 탭입니다.")
+        else :
+            self.bell_Search_Title3.setText("잠시만 기다려주십시오...")
+            self.bell_Search = TheBell(myInput, self.howMany)
+            self.bell_Search.finished.connect(self.setSearchTitle)
+            self.bell_Search.start()
+            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Search(title text, regdate text)")
+
+    @pyqtSlot(str, str, str, str)
+    def setSearchTitle(self, name, title, href, date):
+        title_Li = [self.bell_Search_Title1, self.bell_Search_Title2, self.bell_Search_Title3, self.bell_Search_Title4, self.bell_Search_Title5]
+        date_Li = [self.bell_Search_Date1, self.bell_Search_Date2, self.bell_Search_Date3, self.bell_Search_Date4, self.bell_Search_Date5]
+        idx = self.bell_Search_idx
+
+        title_Li[idx].setText(title)
+        date_Li[idx].setText(date)
+
+        # if in db, make the title and date grey
+        if self.c.execute("SELECT title FROM bell_Search WHERE title = ?", (title,)).fetchone() :
+            title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+            date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+        else :
+            title_Li[idx].setStyleSheet('color:black; text-align:left; background:transparent;')
+            date_Li[idx].setStyleSheet('color:black; text-align:left; background:transparent;')
+
+
+        title_Li[idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        title_Li[idx].clicked.connect(lambda : self.whenSearchClicked(name, href, title, idx, title_Li, date_Li))
+
+        self.bell_Search_idx += 1
+        if self.bell_Search_idx == self.howMany :
+            self.bell_Search_idx = 0
+
+    def whenSearchClicked(self, name, href, title, idx, title_Li, date_Li):
+        clicked = BellClicked(href)
+        clicked.start()
+
+        # insert into the db ONLY WHEN there is no same thing and make it grey
+        if self.c.execute("SELECT title FROM bell_Search WHERE title = ?", (title,)).fetchone() is None:
+            self.c.execute("INSERT INTO bell_Search VALUES(?, ?)", (title, self.nowDateTime,))
+            self.conn.commit()
+            title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+            date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
 
     def __del__(self):
         self.conn.close()

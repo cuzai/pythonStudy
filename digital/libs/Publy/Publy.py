@@ -21,6 +21,7 @@ class Publy(QThread) :
             self.driver = webdriver.Chrome(chrome_options = self.chromeOptions, executable_path = './webdriver/chrome/chromedriver')
             # self.driver = webdriver.Chrome(chrome_options = self.chromeOptions, executable_path = '../../webdriver/chrome/chromedriver')
             self.driver.get(self.url)
+            self.driver.implicitly_wait(10)
             while(True) :
                 temp = self.driver.find_elements_by_css_selector('.set-list__container.curation.bg-white.pt-7')[divNum]
                 titleLi = temp.find_elements_by_css_selector('.set-list > div')
@@ -55,7 +56,6 @@ class Publy(QThread) :
                     pass
                 else:
                     break
-
 
         except Exception as e :
             logging.info(">>>>> Pybly error : {}".format(e))
