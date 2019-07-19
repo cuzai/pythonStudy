@@ -5,6 +5,8 @@ print("프로그램을 종료할 때까지 이 창을 끄지 마십시오")
 import datetime
 import sqlite3
 import time
+import sys
+import logging
 
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
 from PyQt5.QtCore import pyqtSlot
@@ -36,52 +38,18 @@ from libs.TechNeedle.NeedleClicked import NeedleClicked
 from libs.TechNeedle.TechNeedle import TechNeedle
 
 from ui.myUi import Ui_MainWindow
-import sys
-import logging
 
 form_class = uic.loadUiType('./ui/main.ui')[0]
 
 class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
     howMany = 5
-
-    kc_internet_idx = 0
-    kc_topic_idx = 0
-    kc_digital_idx = 0
-    kc_buzz_idx = 0
-
+    kc_internet_idx = 0; kc_topic_idx = 0; kc_digital_idx = 0; kc_buzz_idx = 0
     dt_idx = 0
-
-    n_Press_idx = 0
-    n_Insight_idx = 0
-    n_Tv_idx = 0
-    n_App_idx = 0
-    n_Web_idx = 0
-
+    n_Press_idx = 0; n_Insight_idx = 0; n_Tv_idx = 0; n_App_idx = 0; n_Web_idx = 0
     publy_idx = 0
-
-    tb_Biz_idx = 0
-    tb_Tech_idx = 0
-    tb_Design_idx = 0
-    tb_Product_idx = 0
-    tb_Consumer_idx = 0
-
-    bell_Coopang_idx = 0
-    bell_Ebay_idx = 0
-    bell_Tmon_idx = 0
-    bell_Wemap_idx = 0
-    bell_11st_idx = 0
-    bell_Market_idx = 0
-    bell_Mushin_idx = 0
-    bell_Ssg_idx = 0
-    bell_Search_idx = 0
-
-    retail_Special_idx = 0
-    retail_Store_idx = 0
-    retail_Strategy_idx = 0
-    retail_Global_idx = 0
-    retail_Market_idx = 0
-    retail_Field_idx = 0
-
+    tb_Biz_idx = 0; tb_Tech_idx = 0; tb_Design_idx = 0; tb_Product_idx = 0; tb_Consumer_idx = 0
+    bell_Coopang_idx = 0; bell_Ebay_idx = 0; bell_Tmon_idx = 0; bell_Wemap_idx = 0; bell_11st_idx = 0; bell_Market_idx = 0; bell_Mushin_idx = 0; bell_Ssg_idx = 0; bell_Search_idx = 0;
+    retail_Special_idx = 0; retail_Store_idx = 0; retail_Strategy_idx = 0; retail_Global_idx = 0; retail_Market_idx = 0; retail_Field_idx = 0
     techNeedle_idx = 0
 
     def __init__(self):
@@ -92,167 +60,67 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.setupUi(self)
 
             # Daily Trends
-            self.dailyTrend = DailyTrends(5)
-            self.dailyTrend.error.connect(self.myError)
-            self.dailyTrend.finished.connect(self.setTitle)
-            self.dailyTrend.start()
-            time.sleep(0.1)
+            self.dailyTrend = DailyTrends(self.howMany)
 
             # Korean Click
-            # self.kc_Internet = KoreanClick_Internet(self.howMany)
             self.kc_Internet = KoreanClick("koreanClick_Internet", self.howMany)
-            self.kc_Internet.finished.connect(self.setTitle)
-            self.kc_Internet.error.connect(self.myError)
-            self.kc_Internet.start()
-            time.sleep(0.1)
-
-            # self.kc_Topic = KoreanClick_Topic(self.howMany)
             self.kc_Topic = KoreanClick("koreanClick_Topic", self.howMany)
-            self.kc_Topic.finished.connect(self.setTitle)
-            self.kc_Topic.error.connect(self.myError)
-            self.kc_Topic.start()
-            time.sleep(0.1)
-
-            # self.kc_Digital = KoreanClick_DigitalNow(self.howMany)
             self.kc_Digital = KoreanClick("koreanClick_Digital", self.howMany)
-            self.kc_Digital.finished.connect(self.setTitle)
-            self.kc_Digital.error.connect(self.myError)
-            self.kc_Digital.start()
-            time.sleep(0.1)
-
-            # self.kc_Buzz = KoreanClick_BuzzWord(self.howMany)
             self.kc_Buzz = KoreanClick("koreanClick_Buzz", self.howMany)
-            self.kc_Buzz.finished.connect(self.setTitle)
-            self.kc_Buzz.error.connect(self.myError)
-            self.kc_Buzz.start()
-            time.sleep(0.1)
 
             # Nielsen
             self.nielsen_Press = Nielsen_Press(self.howMany)
-            self.nielsen_Press.finished.connect(self.setTitle)
-            self.nielsen_Press.error.connect(self.myError)
-            self.nielsen_Press.start()
-            time.sleep(0.1)
-
             self.nielsen_Insight = Nielsen_Insight(self.howMany)
-            self.nielsen_Insight.finished.connect(self.setTitle)
-            self.nielsen_Insight.error.connect(self.myError)
-            self.nielsen_Insight.start()
-            time.sleep(0.1)
-
             self.nielsen_Top = Nielsen_Top()
-            self.nielsen_Top.finished.connect(self.setTop)
-            self.nielsen_Top.start()
-            time.sleep(0.1)
 
             # publy
             self.publy = Publy(self.howMany)
-            self.publy.finished.connect(self.setTitle)
-            self.publy.start()
-            time.sleep(0.2)
 
             # trendBird
             self.tb_Biz = TrendBird("tb_Biz", self.howMany)
-            self.tb_Biz.finished.connect(self.setTitle)
-            self.tb_Biz.start()
-            time.sleep(0.1)
-
             self.tb_Tech = TrendBird("tb_Tech", self.howMany)
-            self.tb_Tech.finished.connect(self.setTitle)
-            self.tb_Tech.start()
-            time.sleep(0.1)
-
             self.tb_Design = TrendBird("tb_Design", self.howMany)
-            self.tb_Design.finished.connect(self.setTitle)
-            self.tb_Design.start()
-            time.sleep(0.1)
-
             self.tb_Product = TrendBird("tb_Product", self.howMany)
-            self.tb_Product.finished.connect(self.setTitle)
-            self.tb_Product.start()
-            time.sleep(0.1)
-
             self.tb_Consumer = TrendBird("tb_Consumer", self.howMany)
-            self.tb_Consumer.finished.connect(self.setTitle)
-            self.tb_Consumer.start()
-            time.sleep(0.1)
 
             # the bell
             self.bell_Coopang = TheBell("bell_Coopang", self.howMany)
-            self.bell_Coopang.finished.connect(self.setTitle)
-            self.bell_Coopang.start()
-            time.sleep(0.1)
-
             self.bell_Ebay = TheBell("bell_Ebay", self.howMany)
-            self.bell_Ebay.finished.connect(self.setTitle)
-            self.bell_Ebay.start()
-            time.sleep(0.1)
-
             self.bell_Tmon = TheBell("bell_Tmon", self.howMany)
-            self.bell_Tmon.finished.connect(self.setTitle)
-            self.bell_Tmon.start()
-            time.sleep(0.1)
-
             self.bell_Wemap = TheBell("bell_Wemap", self.howMany)
-            self.bell_Wemap.finished.connect(self.setTitle)
-            self.bell_Wemap.start()
-            time.sleep(0.1)
-
             self.bell_11st = TheBell("bell_11st", self.howMany)
-            self.bell_11st.finished.connect(self.setTitle)
-            self.bell_11st.start()
-            time.sleep(0.1)
-
             self.bell_Market = TheBell("bell_Market", self.howMany)
-            self.bell_Market.finished.connect(self.setTitle)
-            self.bell_Market.start()
-            time.sleep(0.1)
-
             self.bell_Mushin = TheBell("bell_Mushin", self.howMany)
-            self.bell_Mushin.finished.connect(self.setTitle)
-            self.bell_Mushin.start()
-            time.sleep(0.1)
-
             self.bell_Ssg = TheBell("bell_Ssg", self.howMany)
-            self.bell_Ssg.finished.connect(self.setTitle)
-            self.bell_Ssg.start()
-            time.sleep(0.1)
 
             # retail Magazine
             self.retail_Special = RetailMagazine("retail_Special", self.howMany)
-            self.retail_Special.finished.connect(self.setTitle)
-            self.retail_Special.start()
-            time.sleep(0.1)
-
             self.retail_Store = RetailMagazine("retail_Store", self.howMany)
-            self.retail_Store.finished.connect(self.setTitle)
-            self.retail_Store.start()
-            time.sleep(0.1)
-
             self.retail_Strategy = RetailMagazine("retail_Strategy", self.howMany)
-            self.retail_Strategy.finished.connect(self.setTitle)
-            self.retail_Strategy.start()
-            time.sleep(0.1)
-
             self.retail_Global = RetailMagazine("retail_Global", self.howMany)
-            self.retail_Global.finished.connect(self.setTitle)
-            self.retail_Global.start()
-            time.sleep(0.1)
-
             self.retail_Market = RetailMagazine("retail_Market", self.howMany)
-            self.retail_Market.finished.connect(self.setTitle)
-            self.retail_Market.start()
-            time.sleep(0.1)
-
             self.retail_Field = RetailMagazine("retail_Field", self.howMany)
-            self.retail_Field.finished.connect(self.setTitle)
-            self.retail_Field.start()
-            time.sleep(0.1)
 
+            # techNeedle
             self.techNeedle = TechNeedle(self.howMany)
-            self.techNeedle.finished.connect(self.setTitle)
-            self.techNeedle.start()
-            time.sleep(0.1)
+
+            objectLi = [self.dailyTrend, self.kc_Internet, self.kc_Topic, self.kc_Digital, self.kc_Buzz,
+                        self.nielsen_Press, self.nielsen_Insight, self.publy, self.tb_Biz, self.nielsen_Top,
+                        self.tb_Tech, self.tb_Design, self.tb_Product, self.tb_Consumer, self.bell_Coopang,
+                        self.bell_Ebay, self.bell_Tmon, self.bell_Wemap, self.bell_11st, self.bell_Market,
+                        self.bell_Mushin, self.bell_Ssg, self.retail_Special, self.retail_Store, self.retail_Strategy,
+                        self.retail_Global, self.retail_Market, self.retail_Field, self.techNeedle]
+            for obj in objectLi :
+                try :
+                    obj.error.connect(self.myError)
+                except Exception :
+                    pass
+                if obj == self.nielsen_Top :
+                    self.nielsen_Top.finished.connect(self.setTop)
+                else :
+                    obj.finished.connect(self.setTitle)
+                obj.start()
+                time.sleep(0.1)
 
             self.lineEdit.returnPressed.connect(self.searchBell)
 
