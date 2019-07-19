@@ -104,6 +104,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             # techNeedle
             self.techNeedle = TechNeedle(self.howMany)
 
+            # start each Threads
             objectLi = [self.dailyTrend, self.kc_Internet, self.kc_Topic, self.kc_Digital, self.kc_Buzz,
                         self.nielsen_Press, self.nielsen_Insight, self.publy, self.tb_Biz, self.nielsen_Top,
                         self.tb_Tech, self.tb_Design, self.tb_Product, self.tb_Consumer, self.bell_Coopang,
@@ -419,18 +420,9 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
         titleLi = [self.bell_Search_Title1, self.bell_Search_Title2, self.bell_Search_Title3, self.bell_Search_Title4, self.bell_Search_Title5]
         dateLi = [self.bell_Search_Date1, self.bell_Search_Date2, self.bell_Search_Date3, self.bell_Search_Date4, self.bell_Search_Date5]
 
-        for i in titleLi :
-            i.setText("")
-            i.setStyleSheet('color:black; text-align:left; background:transparent;')
-
-        for i in dateLi:
-            i.setText("")
-            i.setStyleSheet('color:black; text-align:left; background:transparent;')
-
         if myInput == "쿠팡" or myInput == "이베이" or myInput == "티몬" or myInput == "위메프" or myInput == "11번가" or myInput == "마켓컬리" or myInput == "무신사" or myInput == "신세계" :
             self.bell_Search_Title3.setText(myInput + "은(는) 이미 존재하는 탭입니다.")
         else :
-            self.bell_Search_Title3.setText("잠시만 기다려주십시오...")
             self.bell_Search = TheBell(myInput, self.howMany)
             self.bell_Search.finished.connect(self.setSearchTitle)
             self.bell_Search.start()
@@ -438,10 +430,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             for i in titleLi:
                 i.setText("")
                 i.setStyleSheet('color:black; text-align:left; background:transparent;')
-
             for i in dateLi:
                 i.setText("")
                 i.setStyleSheet('color:black; text-align:left; background:transparent;')
+
 
 
     @pyqtSlot(str, str, str, str)
