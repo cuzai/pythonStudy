@@ -443,6 +443,14 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.bell_Search.finished.connect(self.setSearchTitle)
             self.bell_Search.start()
             self.c.execute("CREATE TABLE IF NOT EXISTS bell_Search(title text, regdate text)")
+            for i in titleLi:
+                i.setText("")
+                i.setStyleSheet('color:black; text-align:left; background:transparent;')
+
+            for i in dateLi:
+                i.setText("")
+                i.setStyleSheet('color:black; text-align:left; background:transparent;')
+
 
     @pyqtSlot(str, str, str, str)
     def setSearchTitle(self, name, title, href, date):
