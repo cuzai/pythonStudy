@@ -252,7 +252,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             now = datetime.datetime.now()
             self.nowDateTime = now.strftime('%Y-%m-%d %H:%M:%S')
             self.c = self.conn.cursor()
-            self.dbLi = ['dailyTrends', 'koreanClick_Internet', 'koreanClick_Topic', 'koreanClick_Digital', 'koreanClick_Buzz', 'nielsen_Press', 'nielsen_Insight', 'publy', 'tb_Biz', 'tb_Tech', 'tb_Design', 'tb_Product', 'tb_Consumer', 'bell_Coopang', 'bell_Ebay', 'bell_Tmon', 'bell_Wemap', 'bell_11st', 'bell_Market', 'bell_Mushin', 'bell_Ssg', 'retail_Special', 'retail_Store', 'retail_Strategy', 'retail_Global', 'retail_Market', 'retail_Field']
+            self.dbLi = ['dailyTrends', 'koreanClick_Internet', 'koreanClick_Topic', 'koreanClick_Digital', 'koreanClick_Buzz',
+                         'nielsen_Press', 'nielsen_Insight', 'publy', 'tb_Biz', 'tb_Tech', 'tb_Design', 'tb_Product', 'tb_Consumer',
+                         'bell_Coopang', 'bell_Ebay', 'bell_Tmon', 'bell_Wemap', 'bell_11st', 'bell_Market', 'bell_Mushin', 'bell_Ssg',
+                         'retail_Special', 'retail_Store', 'retail_Strategy', 'retail_Global', 'retail_Market', 'retail_Field']
             for i in self.dbLi :
                 self.c.execute("CREATE TABLE IF NOT EXISTS "+ i + "(title text, regdate text)")
 
