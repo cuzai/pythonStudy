@@ -117,7 +117,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 except Exception :
                     pass
                 if obj == self.nielsen_Top :
-                    self.nielsen_Top.finished.connect(self.setTop)
+                    obj.finished.connect(self.setTop)
                 else :
                     obj.finished.connect(self.setTitle)
                 obj.start()
@@ -132,9 +132,8 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.c = self.conn.cursor()
             self.dbLi = ['dailyTrends', 'koreanClick_Internet', 'koreanClick_Topic', 'koreanClick_Digital', 'koreanClick_Buzz',
                          'nielsen_Press', 'nielsen_Insight', 'publy', 'tb_Biz', 'tb_Tech', 'tb_Design', 'tb_Product', 'tb_Consumer',
-                         'bell_Coopang', 'bell_Ebay', 'bell_Tmon', 'bell_Wemap', 'bell_11st', 'bell_Market', 'bell_Mushin', 'bell_Ssg',
                          'retail_Special', 'retail_Store', 'retail_Strategy', 'retail_Global', 'retail_Market', 'retail_Field',
-                         'techNeedle']
+                         'techNeedle', 'bell']
             for i in self.dbLi :
                 self.c.execute("CREATE TABLE IF NOT EXISTS "+ i + "(title text, regdate text)")
 
@@ -262,12 +261,20 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
 
         # if in db, make the title and date grey
-        if self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone():
+        try :
+            db = self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone()
+            title_Li[idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+            title_Li[idx].clicked.connect(lambda: self.whenClicked(name, href, title, idx, title_Li, date_Li))
+        except Exception :
+            # if it is bell, get the bell db
+            db = self.c.execute("SELECT title FROM bell WHERE title = ?", (title,)).fetchone()
+            title_Li[idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+            title_Li[idx].clicked.connect(lambda: self.whenSearchClicked(name, href, title, idx, title_Li, date_Li))
+        if db :
             title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
             date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
 
-        title_Li[idx].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        title_Li[idx].clicked.connect(lambda : self.whenClicked(name, href, title, idx, title_Li, date_Li))
+
 
         if name == "dailyTrends" :
             self.dt_idx += 1
@@ -297,20 +304,36 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.tb_Consumer_idx += 1
         elif name == 'bell_Coopang' :
             self.bell_Coopang_idx += 1
+            if self.bell_Coopang_idx == self.howMany :
+                self.bell_Coopang_idx = 0
         elif name == 'bell_Ebay' :
             self.bell_Ebay_idx += 1
+            if self.bell_Ebay_idx == self.howMany:
+                self.bell_Ebay_idx = 0
         elif name == 'bell_Tmon' :
             self.bell_Tmon_idx += 1
+            if self.bell_Tmon_idx == self.howMany:
+                self.bell_Tmon_idx = 0
         elif name == 'bell_Wemap' :
             self.bell_Wemap_idx += 1
+            if self.bell_Wemap_idx == self.howMany:
+                self.bell_Wemap_idx = 0
         elif name == 'bell_11st' :
             self.bell_11st_idx += 1
+            if self.bell_11st_idx == self.howMany:
+                self.bell_11st_idx = 0
         elif name == 'bell_Market' :
             self.bell_Market_idx += 1
+            if self.bell_Market_idx == self.howMany:
+                self.bell_Market_idx = 0
         elif name == 'bell_Mushin' :
             self.bell_Mushin_idx += 1
+            if self.bell_Mushin_idx == self.howMany:
+                self.bell_Mushin_idx = 0
         elif name == 'bell_Ssg' :
             self.bell_Ssg_idx += 1
+            if self.bell_Ssg_idx == self.howMany:
+                self.bell_Ssg_idx = 0
         elif name == 'retail_Special' :
             self.retail_Special_idx += 1
         elif name == 'retail_Store' :
@@ -388,7 +411,11 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             time.sleep(0.1)
 
             # insert into the db ONLY WHEN there is no same thing and make it grey
-            if self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone() is None :
+            try :
+                db = self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone()
+            except Exception :
+                db = self.c.execute("SELECT title FROM bell WHERE title = ?", (title,)).fetchone()
+            if db is None :
                 self.c.execute("INSERT INTO " + name + " VALUES(?, ?)", (title, self.nowDateTime,))
                 self.conn.commit()
                 title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
@@ -426,15 +453,13 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.bell_Search = TheBell(myInput, self.howMany)
             self.bell_Search.finished.connect(self.setSearchTitle)
             self.bell_Search.start()
-            self.c.execute("CREATE TABLE IF NOT EXISTS bell_Search(title text, regdate text)")
+            self.c.execute("CREATE TABLE IF NOT EXISTS bell(title text, regdate text)")
             for i in titleLi:
                 i.setText("")
                 i.setStyleSheet('color:black; text-align:left; background:transparent;')
             for i in dateLi:
                 i.setText("")
                 i.setStyleSheet('color:black; text-align:left; background:transparent;')
-
-
 
     @pyqtSlot(str, str, str, str)
     def setSearchTitle(self, name, title, href, date):
@@ -454,7 +479,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
 
                 # if in db, make the title and date grey
-                if self.c.execute("SELECT title FROM bell_Search WHERE title = ?", (title,)).fetchone() :
+                if self.c.execute("SELECT title FROM bell WHERE title = ?", (title,)).fetchone() :
                     title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
                     date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
 
@@ -475,11 +500,28 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             time.sleep(0.1)
 
             # insert into the db ONLY WHEN there is no same thing and make it grey
-            if self.c.execute("SELECT title FROM bell_Search WHERE title = ?", (title,)).fetchone() is None:
-                    self.c.execute("INSERT INTO bell_Search VALUES(?, ?)", (title, self.nowDateTime,))
+            if self.c.execute("SELECT title FROM bell WHERE title = ?", (title,)).fetchone() is None:
+                    self.c.execute("INSERT INTO bell VALUES(?, ?)", (title, self.nowDateTime,))
                     self.conn.commit()
                     title_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
                     date_Li[idx].setStyleSheet('color:grey; text-align:left; background:transparent;')
+
+                    self.bell_Coopang_ = TheBell("bell_Coopang", self.howMany)
+                    self.bell_Ebay_ = TheBell("bell_Ebay", self.howMany)
+                    self.bell_Tmon_ = TheBell("bell_Tmon", self.howMany)
+                    self.bell_Wemap_ = TheBell("bell_Wemap", self.howMany)
+                    self.bell_11st_ = TheBell("bell_11st", self.howMany)
+                    self.bell_Market_ = TheBell("bell_Market", self.howMany)
+                    self.bell_Mushin_ = TheBell("bell_Mushin", self.howMany)
+                    self.bell_Ssg_ = TheBell("bell_Ssg", self.howMany)
+
+                    li = [self.bell_Ebay_, self.bell_Tmon_, self.bell_Wemap_, self.bell_11st_, self.bell_Market_,
+                          self.bell_Mushin_, self.bell_Ssg_]
+
+                    for i in li :
+                        i.finished.connect(self.setTitle)
+                        i.start()
+                        time.sleep(0.2)
 
         except Exception as e :
             logging.info(">>>>> whenSearchClicked error : {}".format(e))
