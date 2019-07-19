@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['main.py'],
+a = Analysis(['Main.py'],
              pathex=['C:\\Users\\cuzai\\Desktop\\park\\Programming\\Web_Crawling\\pythonStudy\\digital'],
              binaries=[],
              datas=[],
@@ -23,7 +23,7 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='main',
+          name='Main',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,

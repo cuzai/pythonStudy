@@ -32,6 +32,9 @@ from libs.TheBell.BellClicked import BellClicked
 from libs.RetailMagazine.RetailMagazine import RetailMagazine
 from libs.RetailMagazine.RetailClicked import RetailClicked
 
+from libs.TechNeedle.NeedleClicked import NeedleClicked
+from libs.TechNeedle.TechNeedle import TechNeedle
+
 from ui.myUi import Ui_MainWindow
 import sys
 import logging
@@ -79,6 +82,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
     retail_Market_idx = 0
     retail_Field_idx = 0
 
+    techNeedle_idx = 0
 
     def __init__(self):
         try :
@@ -245,6 +249,11 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.retail_Field.start()
             time.sleep(0.1)
 
+            self.techNeedle = TechNeedle(self.howMany)
+            self.techNeedle.finished.connect(self.setTitle)
+            self.techNeedle.start()
+            time.sleep(0.1)
+
             self.lineEdit.returnPressed.connect(self.searchBell)
 
             # make db
@@ -255,7 +264,8 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.dbLi = ['dailyTrends', 'koreanClick_Internet', 'koreanClick_Topic', 'koreanClick_Digital', 'koreanClick_Buzz',
                          'nielsen_Press', 'nielsen_Insight', 'publy', 'tb_Biz', 'tb_Tech', 'tb_Design', 'tb_Product', 'tb_Consumer',
                          'bell_Coopang', 'bell_Ebay', 'bell_Tmon', 'bell_Wemap', 'bell_11st', 'bell_Market', 'bell_Mushin', 'bell_Ssg',
-                         'retail_Special', 'retail_Store', 'retail_Strategy', 'retail_Global', 'retail_Market', 'retail_Field']
+                         'retail_Special', 'retail_Store', 'retail_Strategy', 'retail_Global', 'retail_Market', 'retail_Field',
+                         'techNeedle']
             for i in self.dbLi :
                 self.c.execute("CREATE TABLE IF NOT EXISTS "+ i + "(title text, regdate text)")
 
@@ -373,6 +383,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             title_Li = [self.retail_Field_Title1, self.retail_Field_Title2, self.retail_Field_Title3, self.retail_Field_Title4, self.retail_Field_Title5]
             date_Li = [self.retail_Field_Date1, self.retail_Field_Date2, self.retail_Field_Date3, self.retail_Field_Date4, self.retail_Field_Date5]
             idx = self.retail_Field_idx
+        elif name == 'techNeedle' :
+            title_Li = [self.techNeedle_Title1, self.techNeedle_Title2, self.techNeedle_Title3, self.techNeedle_Title4, self.techNeedle_Title5]
+            date_Li = [self.techNeedle_Date1, self.techNeedle_Date2, self.techNeedle_Date3, self.techNeedle_Date4, self.techNeedle_Date5]
+            idx = self.techNeedle_idx
 
         title_Li[idx].setText(title)
         date_Li[idx].setText(date)
@@ -440,6 +454,8 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.retail_Market_idx += 1
         elif name == 'retail_Field' :
             self.retail_Field_idx += 1
+        elif name == 'techNeedle' :
+            self.techNeedle_idx += 1
 
     @pyqtSlot(str, str, str, str, str)
     def setTop(self, name, date, title, broadcast, audience):
@@ -494,8 +510,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 clicked = TbClicked(href)
             elif name == 'bell_Coopang' or name == 'bell_Ebay' or name == 'bell_Tmon' or name == 'bell_Wemap' or name == 'bell_11st' or name == 'bell_Market' or name == 'bell_Mushin' or name == 'bell_Ssg':
                 clicked = BellClicked(href)
-            elif name == 'retail_Special' or name == 'retail_Store' or name == 'retail_Strategy' or name == 'retail_Global' or name == 'retailMarket' or name == 'retail_Field':
+            elif name == 'retail_Special' or name == 'retail_Store' or name == 'retail_Strategy' or name == 'retail_Global' or name == 'retail_Market' or name == 'retail_Field':
                 clicked = RetailClicked(href)
+            elif name == 'techNeedle' :
+                clicked = NeedleClicked(href)
 
             clicked.start()
             time.sleep(0.1)
@@ -573,6 +591,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             else :
                 title_Li[idx].setText(title)
                 date_Li[idx].setText(date)
+
 
                 # if in db, make the title and date grey
                 if self.c.execute("SELECT title FROM bell_Search WHERE title = ?", (title,)).fetchone() :

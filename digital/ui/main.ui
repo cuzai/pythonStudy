@@ -55,9 +55,9 @@ border: none;
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-2040</y>
+         <y>-513</y>
          <width>930</width>
-         <height>3510</height>
+         <height>3860</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
@@ -903,7 +903,7 @@ QGroupBox::title {
 }</string>
              </property>
              <property name="title">
-              <string>더벨</string>
+              <string>The Bell</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_30">
               <property name="leftMargin">
@@ -2402,7 +2402,7 @@ background: transparent;</string>
           <property name="minimumSize">
            <size>
             <width>900</width>
-            <height>450</height>
+            <height>800</height>
            </size>
           </property>
           <property name="font">
@@ -3234,6 +3234,202 @@ background: transparent;</string>
                   </item>
                  </layout>
                 </widget>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QGroupBox" name="groupBox_50">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>300</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>300</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>나눔고딕</family>
+               <pointsize>14</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QGroupBox{
+    border: 0px solid rgb(220, 220, 220);
+    margin-top: 0em;
+}
+
+QGroupBox::title {
+    top: 0px;
+    left: 20px;
+}</string>
+             </property>
+             <property name="title">
+              <string>Trend Needle</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_43">
+              <property name="leftMargin">
+               <number>40</number>
+              </property>
+              <property name="topMargin">
+               <number>40</number>
+              </property>
+              <item row="1" column="1">
+               <widget class="QLabel" name="techNeedle_Date2">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLabel" name="techNeedle_Date4">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QPushButton" name="techNeedle_Title4">
+                <property name="font">
+                 <font>
+                  <family>나눔고딕</family>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">text-align: left;
+background: transparent;</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="techNeedle_Title2">
+                <property name="font">
+                 <font>
+                  <family>나눔고딕</family>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">text-align: left;
+background: transparent;</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QPushButton" name="techNeedle_Title3">
+                <property name="font">
+                 <font>
+                  <family>나눔고딕</family>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">text-align: left;
+background: transparent;</string>
+                </property>
+                <property name="text">
+                 <string>Loading...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="techNeedle_Date3">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="techNeedle_Date1">
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QPushButton" name="techNeedle_Title5">
+                <property name="font">
+                 <font>
+                  <family>나눔고딕</family>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">text-align: left;
+background: transparent;</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QPushButton" name="techNeedle_Title1">
+                <property name="font">
+                 <font>
+                  <family>나눔고딕</family>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="cursor">
+                 <cursorShape>ArrowCursor</cursorShape>
+                </property>
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;'dddd'&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">text-align: left;
+background: transparent;</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLabel" name="techNeedle_Date5">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
                </widget>
               </item>
              </layout>
@@ -8129,6 +8325,9 @@ background: transparent;</string>
                 </property>
                 <property name="cursor">
                  <cursorShape>ArrowCursor</cursorShape>
+                </property>
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;'dddd'&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">text-align: left;
