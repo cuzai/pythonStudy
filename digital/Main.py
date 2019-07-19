@@ -29,6 +29,9 @@ from libs.TrendBird.TbClicked import TbClicked
 from libs.TheBell.TheBell import TheBell
 from libs.TheBell.BellClicked import BellClicked
 
+from libs.RetailMagazine.RetailMagazine import RetailMagazine
+from libs.RetailMagazine.RetailClicked import RetailClicked
+
 from ui.myUi import Ui_MainWindow
 import sys
 import logging
@@ -68,6 +71,13 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
     bell_Mushin_idx = 0
     bell_Ssg_idx = 0
     bell_Search_idx = 0
+
+    retail_Special_idx = 0
+    retail_Store_idx = 0
+    retail_Strategy_idx = 0
+    retail_Global_idx = 0
+    retail_Market_idx = 0
+    retail_Field_idx = 0
 
 
     def __init__(self):
@@ -194,6 +204,47 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.bell_Market.start()
             time.sleep(0.1)
 
+            self.bell_Mushin = TheBell("bell_Mushin", self.howMany)
+            self.bell_Mushin.finished.connect(self.setTitle)
+            self.bell_Mushin.start()
+            time.sleep(0.1)
+
+            self.bell_Ssg = TheBell("bell_Ssg", self.howMany)
+            self.bell_Ssg.finished.connect(self.setTitle)
+            self.bell_Ssg.start()
+            time.sleep(0.1)
+
+            # retail Magazine
+            self.retail_Special = RetailMagazine("retail_Special", self.howMany)
+            self.retail_Special.finished.connect(self.setTitle)
+            self.retail_Special.start()
+            time.sleep(0.1)
+
+            self.retail_Store = RetailMagazine("retail_Store", self.howMany)
+            self.retail_Store.finished.connect(self.setTitle)
+            self.retail_Store.start()
+            time.sleep(0.1)
+
+            self.retail_Strategy = RetailMagazine("retail_Strategy", self.howMany)
+            self.retail_Strategy.finished.connect(self.setTitle)
+            self.retail_Strategy.start()
+            time.sleep(0.1)
+
+            self.retail_Global = RetailMagazine("retail_Global", self.howMany)
+            self.retail_Global.finished.connect(self.setTitle)
+            self.retail_Global.start()
+            time.sleep(0.1)
+
+            self.retail_Market = RetailMagazine("retail_Market", self.howMany)
+            self.retail_Market.finished.connect(self.setTitle)
+            self.retail_Market.start()
+            time.sleep(0.1)
+
+            self.retail_Field = RetailMagazine("retail_Field", self.howMany)
+            self.retail_Field.finished.connect(self.setTitle)
+            self.retail_Field.start()
+            time.sleep(0.1)
+
             self.lineEdit.returnPressed.connect(self.searchBell)
 
             # make db
@@ -201,7 +252,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             now = datetime.datetime.now()
             self.nowDateTime = now.strftime('%Y-%m-%d %H:%M:%S')
             self.c = self.conn.cursor()
-            self.dbLi = ['dailyTrends', 'koreanClick_Internet', 'koreanClick_Topic', 'koreanClick_Digital', 'koreanClick_Buzz', 'nielsen_Press', 'nielsen_Insight', 'publy', 'tb_Biz', 'tb_Tech', 'tb_Design', 'tb_Product', 'tb_Consumer', 'bell_Coopang', 'bell_Ebay', 'bell_Tmon', 'bell_Wemap', 'bell_11st', 'bell_Market']
+            self.dbLi = ['dailyTrends', 'koreanClick_Internet', 'koreanClick_Topic', 'koreanClick_Digital', 'koreanClick_Buzz', 'nielsen_Press', 'nielsen_Insight', 'publy', 'tb_Biz', 'tb_Tech', 'tb_Design', 'tb_Product', 'tb_Consumer', 'bell_Coopang', 'bell_Ebay', 'bell_Tmon', 'bell_Wemap', 'bell_11st', 'bell_Market', 'bell_Mushin', 'bell_Ssg', 'retail_Special', 'retail_Store', 'retail_Strategy', 'retail_Global', 'retail_Market', 'retail_Field']
             for i in self.dbLi :
                 self.c.execute("CREATE TABLE IF NOT EXISTS "+ i + "(title text, regdate text)")
 
@@ -287,9 +338,42 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             title_Li = [self.bell_Market_Title1, self.bell_Market_Title2, self.bell_Market_Title3, self.bell_Market_Title4, self.bell_Market_Title5]
             date_Li = [self.bell_Market_Date1, self.bell_Market_Date2, self.bell_Market_Date3, self.bell_Market_Date4, self.bell_Market_Date5]
             idx = self.bell_Market_idx
+        elif name == 'bell_Mushin' :
+            title_Li = [self.bell_Mushin_Title1, self.bell_Mushin_Title2, self.bell_Mushin_Title3, self.bell_Mushin_Title4, self.bell_Mushin_Title5]
+            date_Li = [self.bell_Mushin_Date1, self.bell_Mushin_Date2, self.bell_Mushin_Date3, self.bell_Mushin_Date4, self.bell_Mushin_Date5]
+            idx = self.bell_Mushin_idx
+        elif name == 'bell_Ssg' :
+            title_Li = [self.bell_Ssg_Title1, self.bell_Ssg_Title2, self.bell_Ssg_Title3, self.bell_Ssg_Title4, self.bell_Ssg_Title5]
+            date_Li = [self.bell_Ssg_Date1, self.bell_Ssg_Date2, self.bell_Ssg_Date3, self.bell_Ssg_Date4, self.bell_Ssg_Date5]
+            idx = self.bell_Ssg_idx
+        elif name == 'retail_Special' :
+            title_Li = [self.retail_Cover_Title1, self.retail_Cover_Title2, self.retail_Cover_Title3, self.retail_Cover_Title4, self.retail_Cover_Title5]
+            date_Li = [self.retail_Cover_Date1, self.retail_Cover_Date2, self.retail_Cover_Date3, self.retail_Cover_Date4, self.retail_Cover_Date5]
+            idx = self.retail_Special_idx
+        elif name == 'retail_Store' :
+            title_Li = [self.retail_Store_Title1, self.retail_Store_Title2, self.retail_Store_Title3, self.retail_Store_Title4, self.retail_Store_Title5]
+            date_Li = [self.retail_Store_Date1, self.retail_Store_Date2, self.retail_Store_Date3, self.retail_Store_Date4, self.retail_Store_Date5]
+            idx = self.retail_Store_idx
+        elif name == 'retail_Strategy' :
+            title_Li = [self.retail_Biz_Title1, self.retail_Biz_Title2, self.retail_Biz_Title3, self.retail_Biz_Title4, self.retail_Biz_Title5]
+            date_Li = [self.retail_Biz_Date1, self.retail_Biz_Date2, self.retail_Biz_Date3, self.retail_Biz_Date4, self.retail_Biz_Date5]
+            idx = self.retail_Strategy_idx
+        elif name == 'retail_Global' :
+            title_Li = [self.retail_Global_Title1, self.retail_Global_Title2, self.retail_Global_Title3, self.retail_Global_Title4, self.retail_Global_Title5]
+            date_Li = [self.retail_Global_Date1, self.retail_Global_Date2, self.retail_Global_Date3, self.retail_Global_Date4, self.retail_Global_Date5]
+            idx = self.retail_Global_idx
+        elif name == 'retail_Market' :
+            title_Li = [self.retail_Market_Title1, self.retail_Market_Title2, self.retail_Market_Title3, self.retail_Market_Title4, self.retail_Market_Title5]
+            date_Li = [self.retail_Market_Date1, self.retail_Market_Date2, self.retail_Market_Date3, self.retail_Market_Date4, self.retail_Market_Date5]
+            idx = self.retail_Market_idx
+        elif name == 'retail_Field' :
+            title_Li = [self.retail_Field_Title1, self.retail_Field_Title2, self.retail_Field_Title3, self.retail_Field_Title4, self.retail_Field_Title5]
+            date_Li = [self.retail_Field_Date1, self.retail_Field_Date2, self.retail_Field_Date3, self.retail_Field_Date4, self.retail_Field_Date5]
+            idx = self.retail_Field_idx
 
         title_Li[idx].setText(title)
         date_Li[idx].setText(date)
+
 
         # if in db, make the title and date grey
         if self.c.execute("SELECT title FROM " + name + " WHERE title = ?", (title,)).fetchone():
@@ -337,6 +421,22 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             self.bell_11st_idx += 1
         elif name == 'bell_Market' :
             self.bell_Market_idx += 1
+        elif name == 'bell_Mushin' :
+            self.bell_Mushin_idx += 1
+        elif name == 'bell_Ssg' :
+            self.bell_Ssg_idx += 1
+        elif name == 'retail_Special' :
+            self.retail_Special_idx += 1
+        elif name == 'retail_Store' :
+            self.retail_Store_idx += 1
+        elif name == 'retail_Strategy' :
+            self.retail_Strategy_idx += 1
+        elif name == 'retail_Global' :
+            self.retail_Global_idx += 1
+        elif name == 'retail_Market' :
+            self.retail_Market_idx += 1
+        elif name == 'retail_Field' :
+            self.retail_Field_idx += 1
 
     @pyqtSlot(str, str, str, str, str)
     def setTop(self, name, date, title, broadcast, audience):
@@ -389,8 +489,11 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                 clicked = PClicked(href)
             elif name == 'tb_Biz' or name == 'tb_Tech' or name == 'tb_Design' or name == 'tb_Product' or name == 'tb_Consumer':
                 clicked = TbClicked(href)
-            elif name == 'bell_Coopang' or name == 'bell_Ebay' or name == 'bell_Tmon' or name == 'bell_Wemap' or name == 'bell_11st' or name == 'bell_Market' :
+            elif name == 'bell_Coopang' or name == 'bell_Ebay' or name == 'bell_Tmon' or name == 'bell_Wemap' or name == 'bell_11st' or name == 'bell_Market' or name == 'bell_Mushin' or name == 'bell_Ssg':
                 clicked = BellClicked(href)
+            elif name == 'retail_Special' or name == 'retail_Store' or name == 'retail_Strategy' or name == 'retail_Global' or name == 'retailMarket' or name == 'retail_Field':
+                clicked = RetailClicked(href)
+
             clicked.start()
             time.sleep(0.1)
 

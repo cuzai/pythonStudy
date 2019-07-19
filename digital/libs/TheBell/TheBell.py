@@ -27,6 +27,10 @@ class TheBell(QThread) :
             self.url = 'http://www.thebell.co.kr/free/content/Search.asp?keyword=11%EB%B2%88%EA%B0%80'
         elif name == 'bell_Market':
             self.url = 'http://www.thebell.co.kr/free/content/Search.asp?keyword=%EB%A7%88%EC%BC%93%EC%BB%AC%EB%A6%AC'
+        elif name == 'bell_Mushin' :
+            self.url ='http://www.thebell.co.kr/free/content/Search.asp?keyword=%EB%AC%B4%EC%8B%A0%EC%82%AC'
+        elif name == 'bell_Ssg' :
+            self.url = 'http://www.thebell.co.kr/free/content/Search.asp?keyword=%EC%8B%A0%EC%84%B8%EA%B3%84'
         else  :
             self.url = 'http://www.thebell.co.kr/free/content/Search.asp?keyword=' + self.name
 
