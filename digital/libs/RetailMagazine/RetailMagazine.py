@@ -42,7 +42,7 @@ class RetailMagazine(QThread) :
         temp = soup.select('li .title_strong')
         for n, i in enumerate(temp) :
             href = i.select_one('a')['href']
-            title = "   " + i.select_one('a').text
+            title = "" + i.select_one('a').text
             date = ""
 
             self.finished.emit(self.name, title, href, date)

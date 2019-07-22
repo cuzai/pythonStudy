@@ -1,3 +1,6 @@
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QGraphicsDropShadowEffect
+
 print("프로그램을 여는 중입니다.")
 print("컴퓨터 사양에 따라 최대 10초까지 소요될 수 있습니다.")
 print("프로그램을 종료할 때까지 이 창을 끄지 마십시오")
@@ -58,6 +61,14 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
 
             # initialize ui
             self.setupUi(self)
+
+            # set shadow
+            shadowLi = [self.TrendBird_Tab, self.TechNeedle_GroupBox, self.TrendNeedle_GroupBox, self.Publy_GroupBox,
+                        self.Niensen_Tab, self.Nielsen10_Tab, self.RetailMagazine_Tab, self.Bell_Tab, self.KC_Tab]
+            for i in shadowLi :
+                shadow = QGraphicsDropShadowEffect(blurRadius=8, xOffset=3, yOffset=2)
+                shadow.setColor(QColor(170, 170, 170))
+                i.setGraphicsEffect(shadow)
 
             # Daily Trends
             self.dailyTrend = DailyTrends(self.howMany)
@@ -447,6 +458,11 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
         titleLi = [self.bell_Search_Title1, self.bell_Search_Title2, self.bell_Search_Title3, self.bell_Search_Title4, self.bell_Search_Title5]
         dateLi = [self.bell_Search_Date1, self.bell_Search_Date2, self.bell_Search_Date3, self.bell_Search_Date4, self.bell_Search_Date5]
 
+        for i in titleLi :
+            i.setText("")
+        for i in dateLi :
+            i.setText("")
+
         if myInput == "쿠팡" or myInput == "이베이" or myInput == "티몬" or myInput == "위메프" or myInput == "11번가" or myInput == "마켓컬리" or myInput == "무신사" or myInput == "신세계" :
             self.bell_Search_Title3.setText(myInput + "은(는) 이미 존재하는 탭입니다.")
         else :
@@ -497,7 +513,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
         try :
             clicked = BellClicked(href)
             clicked.start()
-            time.sleep(0.1)
+            time.sleep(0.2)
 
             # insert into the db ONLY WHEN there is no same thing and make it grey
             if self.c.execute("SELECT title FROM bell WHERE title = ?", (title,)).fetchone() is None:
@@ -515,7 +531,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
                     self.bell_Mushin_ = TheBell("bell_Mushin", self.howMany)
                     self.bell_Ssg_ = TheBell("bell_Ssg", self.howMany)
 
-                    li = [self.bell_Ebay_, self.bell_Tmon_, self.bell_Wemap_, self.bell_11st_, self.bell_Market_,
+                    li = [self.bell_Coopang_, self.bell_Ebay_, self.bell_Tmon_, self.bell_Wemap_, self.bell_11st_, self.bell_Market_,
                           self.bell_Mushin_, self.bell_Ssg_]
 
                     for i in li :

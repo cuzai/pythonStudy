@@ -18,20 +18,21 @@ class Nielsen_Top(QThread) :
 
     def run(self):
         try :
-            self.driver = webdriver.Chrome(chrome_options = self.chromeOptions, executable_path = './webdriver/chrome/chromedriver')
-            # self.driver = webdriver.Chrome(chrome_options = self.chromeOptions, executable_path = '../../webdriver/chrome/chromedriver')
-            self.driver.get(self.url)
-            self.driver.implicitly_wait(10)
-            self.driver.find_element_by_css_selector('body').send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
-            self.driver.find_element_by_css_selector('body').send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
-            self.driver.find_element_by_css_selector('body').send_keys(Keys.PAGE_DOWN)
-            time.sleep(1)
-            self.driver.find_element_by_css_selector('body').send_keys(Keys.PAGE_DOWN)
-            self.parseTv()
-            self.parseApp()
-            self.parseWeb()
+            with webdriver.Chrome(chrome_options = self.chromeOptions, executable_path = './webdriver/chrome/chromedriver') as self.driver:
+                # self.driver = webdriver.Chrome(chrome_options = self.chromeOptions, executable_path = '../../webdriver/chrome/chromedriver')
+                self.driver.get(self.url)
+                self.driver.implicitly_wait(10)
+                self.driver.find_element_by_css_selector('body').send_keys(Keys.PAGE_DOWN)
+                time.sleep(0.1)
+                self.driver.find_element_by_css_selector('body').send_keys(Keys.PAGE_DOWN)
+                time.sleep(0.1)
+                self.driver.find_element_by_css_selector('body').send_keys(Keys.PAGE_DOWN)
+                time.sleep(0.1)
+                self.driver.find_element_by_css_selector('body').send_keys(Keys.PAGE_DOWN)
+                time.sleep(0.1)
+                self.parseTv()
+                self.parseApp()
+                self.parseWeb()
 
         except Exception as e :
             logging.info("Nielsen_Top error : {}".format(e))

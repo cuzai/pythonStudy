@@ -19,4 +19,4 @@ class NeedleClicked(QThread):
             pass
 
 if __name__ == "__main__":
-    NeedleClicked('').run()
+    NeedleClicked('https://www.naver.com').run()
