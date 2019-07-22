@@ -66,7 +66,7 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow) :
             shadowLi = [self.TrendBird_Tab, self.TechNeedle_GroupBox, self.TrendNeedle_GroupBox, self.Publy_GroupBox,
                         self.Niensen_Tab, self.Nielsen10_Tab, self.RetailMagazine_Tab, self.Bell_Tab, self.KC_Tab]
             for i in shadowLi :
-                shadow = QGraphicsDropShadowEffect(blurRadius=8, xOffset=3, yOffset=2)
+                shadow = QGraphicsDropShadowEffect(blurRadius=8, xOffset=3, yOffset=3)
                 shadow.setColor(QColor(170, 170, 170))
                 i.setGraphicsEffect(shadow)
 

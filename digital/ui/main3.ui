@@ -55,9 +55,9 @@ border: none;
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-3382</y>
+         <y>0</y>
          <width>943</width>
-         <height>4010</height>
+         <height>3984</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
@@ -134,7 +134,7 @@ border: none;
              <property name="font">
               <font>
                <family>나눔고딕</family>
-               <pointsize>14</pointsize>
+               <pointsize>16</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -861,7 +861,7 @@ background: transparent;</string>
              <property name="font">
               <font>
                <family>나눔고딕</family>
-               <pointsize>14</pointsize>
+               <pointsize>16</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -891,6 +891,18 @@ QGroupBox::title {
               <string>The Bell</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_25">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
               <item row="1" column="0">
                <widget class="QTabWidget" name="Bell_Tab">
                 <property name="sizePolicy">
@@ -2465,14 +2477,14 @@ background: transparent;</string>
             <widget class="QLabel" name="label_6">
              <property name="font">
               <font>
-               <family>나눔고딕</family>
+               <family>나눔고딕 ExtraBold</family>
                <pointsize>20</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">background : firebrick;
+              <string notr="true">background : qlineargradient(spread:pad, x1:0.1, y1:0, x2:1, y2:0, stop:0 rgb(178, 34, 34), stop:1 rgba(255, 255, 255, 255));
 color : white;
 border-radius : 10px;
 padding-top : 7px;
@@ -2482,10 +2494,10 @@ margin-right : 20px;
 margin-top : 20px</string>
              </property>
              <property name="text">
-              <string>커머스 트렌드</string>
+              <string>  커머스 트렌드</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignCenter</set>
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
@@ -3039,7 +3051,7 @@ QTabWidget::pane {
                  <enum>QTabWidget::Rounded</enum>
                 </property>
                 <property name="currentIndex">
-                 <number>2</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="tab_21">
                  <attribute name="title">
@@ -9173,7 +9185,7 @@ background: transparent;</string>
              </property>
              <property name="font">
               <font>
-               <family>나눔고딕</family>
+               <family>나눔고딕 ExtraBold</family>
                <pointsize>20</pointsize>
                <weight>75</weight>
                <bold>true</bold>
@@ -9190,7 +9202,7 @@ margin-right : 20px;
 margin-top : 20px</string>
              </property>
              <property name="text">
-              <string>비즈니스 트렌드</string>
+              <string>  비즈니스 트렌드</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
